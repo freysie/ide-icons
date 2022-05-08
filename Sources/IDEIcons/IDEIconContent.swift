@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Specifies the content of an IDE icon.
-public enum IDEIconContent {
+public enum IDEIconContent: Hashable {
   /// Text content in the form of a string.
   case text(String)
 

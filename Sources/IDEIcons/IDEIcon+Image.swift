@@ -12,6 +12,8 @@ let scale = WKInterfaceDevice.current().screenScale
 let scale = UIScreen.main.scale
 #endif
 
+var cache = [IDEIcon: PlatformImage]()
+
 public extension IDEIcon {
   /// The resulting icon image.
 #if os(macOS)
@@ -23,6 +25,8 @@ public extension IDEIcon {
 
 extension IDEIcon {
   var _image: PlatformImage {
+    if let cachedImage = cache[self] { return cachedImage }
+    
     let outlineRadius = size.outerRadius - (size.borderWidth + size.outlineWidth)
     let borderRadius = size.outerRadius - size.borderWidth
     
@@ -125,11 +129,14 @@ extension IDEIcon {
       return PlatformImage()
     }
     
+    let platformImage: PlatformImage
 #if os(macOS)
-    return PlatformImage(cgImage: image, size: unscaledBounds.size)
+    platformImage = PlatformImage(cgImage: image, size: unscaledBounds.size)
 #else
-    return PlatformImage(cgImage: image, scale: scale, orientation: UIImage.Orientation.up)
+    platformImage = PlatformImage(cgImage: image, scale: scale, orientation: UIImage.Orientation.up)
 #endif
+    cache[self] = platformImage
+    return platformImage
   }
 }
 

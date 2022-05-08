@@ -57,7 +57,7 @@ struct IDEIcon_Previews: PreviewProvider {
     }
   }
 
-  struct Logo: View {
+  struct ReadMeLogo: View {
     var colorScheme: ColorScheme
     var body: some View {
       VStack {
@@ -93,8 +93,8 @@ struct IDEIcon_Previews: PreviewProvider {
       .preferredColorScheme(.dark)
 
     ScreenshotGroup("../../Screenshots", relativeTo: #filePath) {
-      Logo(colorScheme: .light).screenshotName("IDEIcons~light")
-      Logo(colorScheme: .dark).screenshotName("IDEIcons~dark")
+      ReadMeLogo(colorScheme: .light).screenshotName("IDEIcons~light")
+      ReadMeLogo(colorScheme: .dark).screenshotName("IDEIcons~dark")
     }
     
 //      .onAppear {
@@ -226,9 +226,12 @@ struct IDEIcon_Previews: PreviewProvider {
       Group {
         Label("Keyword", IDEIcon("@", color: .gray, colorScheme: colorScheme, style: style, size: size))
         Label("Snippet", IDEIcon("{}", color: .gray, colorScheme: colorScheme, style: style, size: size))
+        // Label("Snippet", IDEIcon(systemImage: "at", color: .gray, colorScheme: colorScheme, style: style, size: size))
+        // Label("Snippet", IDEIcon(systemImage: "curlybraces", color: .gray, colorScheme: colorScheme, style: style, size: size))
       }
 
       Label("Comment", IDEIcon("􀋲", color: .monochrome, colorScheme: colorScheme, style: style, size: size))
+//      / Label("Comment", IDEIcon(systemImage: "list.bullet", color: .monochrome, colorScheme: colorScheme, style: style, size: size))
     }
   }
 
@@ -246,11 +249,11 @@ struct IDEIcon_Previews: PreviewProvider {
         Label("Date", IDEIcon("D", color: .purple, colorScheme: colorScheme, style: style, size: size))
         Group {
           Label("Binary Data", IDEIcon("􀆨", color: .purple, colorScheme: colorScheme, style: style, size: size))
-          Label("Binary Data", IDEIcon(systemImage: "power", color: .purple, colorScheme: colorScheme, style: style, size: size))
+          // Label("Binary Data", IDEIcon(systemImage: "power", color: .purple, colorScheme: colorScheme, style: style, size: size))
         }
         Group {
           Label("UUID", IDEIcon("􀘱", color: .purple, colorScheme: colorScheme, style: style, size: size))
-          Label("UUID", IDEIcon(systemImage: "barcode", color: .purple, colorScheme: colorScheme, style: style, size: size))
+          // Label("UUID", IDEIcon(systemImage: "barcode", color: .purple, colorScheme: colorScheme, style: style, size: size))
         }
         Label("URI", IDEIcon("U", color: .purple, colorScheme: colorScheme, style: style, size: size))
         Label("Transformable", IDEIcon("T", color: .purple, colorScheme: colorScheme, style: style, size: size))
@@ -318,10 +321,10 @@ struct IDEIcon_Previews: PreviewProvider {
         Label("Trigger", IDEIcon("􀋦", color: .monochrome, colorScheme: colorScheme, style: style, size: size))
       }
       
-      Label("Table", IDEIcon(systemImage: "tablecells", color: .teal, colorScheme: colorScheme, style: style, size: size))
-      Label("View", IDEIcon(systemImage: "rectangle.and.text.magnifyingglass", color: .teal, colorScheme: colorScheme, style: style, size: size))
-      Label("Procedure", IDEIcon(systemImage: "scroll", color: .orange, colorScheme: colorScheme, style: style, size: size))
-      Label("Trigger", IDEIcon(systemImage: "bolt.fill", color: .orange, colorScheme: colorScheme, style: style, size: size))
+      // Label("Table", IDEIcon(systemImage: "tablecells", color: .teal, colorScheme: colorScheme, style: style, size: size))
+      // Label("View", IDEIcon(systemImage: "rectangle.and.text.magnifyingglass", color: .teal, colorScheme: colorScheme, style: style, size: size))
+      // Label("Procedure", IDEIcon(systemImage: "scroll", color: .orange, colorScheme: colorScheme, style: style, size: size))
+      // Label("Trigger", IDEIcon(systemImage: "bolt.fill", color: .orange, colorScheme: colorScheme, style: style, size: size))
     }
   }
 }
