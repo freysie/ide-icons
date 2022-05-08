@@ -19,18 +19,14 @@ import IDEIcons
 ## Usage
 
 ```swift
-Label("Property", ideIcon: "P")
-Image(ideIcon: "P")
-NSImage(ideIcon: "P")
-UIImage(ideIcon: "P")
-CGImage(ideIcon: "P")
+IDEIcon(_:color:colorScheme:style:size:)
 ```
 
 ```swift
-Label(_:ideIcon:size:style:color:colorScheme:)
-Image(ideIcon:size:style:color:colorScheme:)
-NSImage(ideIcon:size:style:color:colorScheme:)
-UIImage(ideIcon:size:style:color:colorScheme:)
-CGImage(ideIcon:size:style:color:colorScheme:)
+Label("Property", IDEIcon("P"))
+Image(IDEIcon("P"))
+NSImage(IDEIcon("P"))
+UIImage(IDEIcon("P"))
+CGImage(IDEIcon("P"))
 ```
 

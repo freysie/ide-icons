@@ -10,11 +10,17 @@ typealias PlatformFont = UIFont
 typealias PlatformImage = UIImage
 #endif
 
-//public extension PlatformImage {
-//  convenience init(_ ideIcon: IDEIcon) {
-//    // self.init(cgImage: <#T##CGImage#>, size: <#T##NSSize#>)
-//  }
-//}
+public extension PlatformImage {
+  convenience init(_ icon: IDEIcon) {
+    guard let cgImage = icon.cgImage else { self.init(); return }
+
+#if os(macOS)
+    self.init(cgImage: cgImage, size: icon.size.unscaledBounds.size)
+#else
+    self.init(cgImage: image, scale: scale, orientation: UIImage.Orientation.up)
+#endif
+  }
+}
 
 public extension Image {
   init(_ ideIcon: IDEIcon) {

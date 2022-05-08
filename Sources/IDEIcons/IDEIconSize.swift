@@ -43,4 +43,6 @@ extension IDEIconSize {
 #else
   var yOffset: CGFloat { 0 }
 #endif
+  
+  var unscaledBounds: CGRect { CGRect(origin: .zero, size: CGSize(width: frameSize, height: frameSize)) }
 }

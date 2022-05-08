@@ -21,12 +21,9 @@ public extension IDEIcon {
 #else
   var image: UIImage { _image }
 #endif
-}
 
-extension IDEIcon {
-  var _image: PlatformImage {
-    if let cachedImage = cache[self] { return cachedImage }
-    
+  /// The resulting CoreGraphics image object.
+  var cgImage: CGImage? {
     let outlineRadius = size.outerRadius - (size.borderWidth + size.outlineWidth)
     let borderRadius = size.outerRadius - size.borderWidth
     
@@ -39,10 +36,9 @@ extension IDEIcon {
       space: CGColorSpace(name: CGColorSpace.genericRGBLinear)!,
       bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
     ) else {
-      return PlatformImage()
+      return nil
     }
     
-    let unscaledBounds = CGRect(origin: .zero, size: CGSize(width: size.frameSize, height: size.frameSize))
     let bounds = CGRect(origin: .zero, size: CGSize(width: size.frameSize * scale, height: size.frameSize * scale))
     
     switch style {
@@ -125,18 +121,16 @@ extension IDEIcon {
       break
     }
     
-    guard let image = context.makeImage() else {
-      return PlatformImage()
-    }
-    
-    let platformImage: PlatformImage
-#if os(macOS)
-    platformImage = PlatformImage(cgImage: image, size: unscaledBounds.size)
-#else
-    platformImage = PlatformImage(cgImage: image, scale: scale, orientation: UIImage.Orientation.up)
-#endif
-    cache[self] = platformImage
-    return platformImage
+    return context.makeImage()
+  }
+}
+
+extension IDEIcon {
+  var _image: PlatformImage {
+    if let cachedImage = cache[self] { return cachedImage }
+    let image = PlatformImage(self)
+    cache[self] = image
+    return image
   }
 }
 
