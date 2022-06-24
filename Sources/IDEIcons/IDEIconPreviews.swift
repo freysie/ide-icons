@@ -1,5 +1,4 @@
 import SwiftUI
-import PreviewScreenshots
 
 struct IDEIcon_Previews: PreviewProvider {
 //  static func screenshot(_ name: String, view: AnyView) {
@@ -88,15 +87,16 @@ struct IDEIcon_Previews: PreviewProvider {
   }
   
   static var previews: some View {
+    Group {
+      
+      ReadMeLogo(colorScheme: .light)
+      ReadMeLogo(colorScheme: .dark)
+    }
+    
     ColorEnum(colorScheme: .dark)
       .padding()
       .preferredColorScheme(.dark)
 
-    ScreenshotGroup("../../Screenshots", relativeTo: #filePath) {
-      ReadMeLogo(colorScheme: .light).screenshotName("IDEIcons~light")
-      ReadMeLogo(colorScheme: .dark).screenshotName("IDEIcons~dark")
-    }
-    
 //      .onAppear {
 //        screenshot("IDEIconPreviewSourceCode", view: AnyView(VStack(alignment: .leading) { SourceCodeExamples() }))
 //        screenshot("IDEIconPreviewDataModel", view: AnyView(VStack(alignment: .leading) { DataModelExamples() }))
@@ -136,20 +136,38 @@ struct IDEIcon_Previews: PreviewProvider {
     .padding()
     .labelStyle(.iconOnly)
     .preferredColorScheme(.dark)
+    
+    Group {
+      HStack(alignment: .top, spacing: 50) {
+        VStack(alignment: .leading) { DebuggerExamples() }
+        VStack(alignment: .leading) { DebuggerExamples(size: .large) }
+      }
+      .padding()
+      .preferredColorScheme(.dark)
 
-    HStack(alignment: .top, spacing: 50) {
-      VStack(alignment: .leading) { DatabaseObjectExamples() }
-      VStack(alignment: .leading) { DatabaseObjectExamples(size: .large) }
+      HStack(alignment: .top, spacing: 50) {
+        VStack(alignment: .leading) { DebuggerExamples() }
+        VStack(alignment: .leading) { DebuggerExamples(size: .large) }
+      }
+      .padding()
+      .preferredColorScheme(.light)
     }
-    .padding()
-    .preferredColorScheme(.dark)
 
-    HStack(alignment: .top, spacing: 50) {
-      VStack(alignment: .leading) { DatabaseObjectExamples() }
-      VStack(alignment: .leading) { DatabaseObjectExamples(size: .large) }
+    Group {
+      HStack(alignment: .top, spacing: 50) {
+        VStack(alignment: .leading) { DatabaseObjectExamples() }
+        VStack(alignment: .leading) { DatabaseObjectExamples(size: .large) }
+      }
+      .padding()
+      .preferredColorScheme(.dark)
+
+      HStack(alignment: .top, spacing: 50) {
+        VStack(alignment: .leading) { DatabaseObjectExamples() }
+        VStack(alignment: .leading) { DatabaseObjectExamples(size: .large) }
+      }
+      .padding()
+      .preferredColorScheme(.light)
     }
-    .padding()
-    .preferredColorScheme(.light)
 
     HStack(alignment: .top, spacing: 50) {
       VStack(alignment: .leading) { SourceCodeExamples() }
@@ -225,7 +243,9 @@ struct IDEIcon_Previews: PreviewProvider {
 
       Group {
         Label("Keyword", IDEIcon("@", color: .gray, colorScheme: colorScheme, style: style, size: size))
-        Label("Snippet", IDEIcon("{}", color: .gray, colorScheme: colorScheme, style: style, size: size))
+//        Label("Snippet", IDEIcon("{}", color: .gray, colorScheme: colorScheme, style: style, size: size))
+        Label("Snippet", IDEIcon("{ }", color: .gray, colorScheme: colorScheme, style: style, size: size))
+//        Label("Snippet", IDEIcon("􀡅", color: .gray, colorScheme: colorScheme, style: style, size: size))
         // Label("Snippet", IDEIcon(systemImage: "at", color: .gray, colorScheme: colorScheme, style: style, size: size))
         // Label("Snippet", IDEIcon(systemImage: "curlybraces", color: .gray, colorScheme: colorScheme, style: style, size: size))
       }
@@ -298,6 +318,28 @@ struct IDEIcon_Previews: PreviewProvider {
       Label("Point", IDEIcon("•", color: .purple, colorScheme: colorScheme, style: style, size: size))
       Label("IP Address", IDEIcon("􀩲", color: .purple, colorScheme: colorScheme, style: style, size: size))
       Label("TS Vector", IDEIcon("􀊫", color: .purple, colorScheme: colorScheme, style: style, size: size))
+    }
+  }
+
+  struct DebuggerExamples: View {
+    var size = IDEIconSize.regular
+    var style = IDEIconStyle.default
+    @Environment(\.colorScheme) var colorScheme
+
+    var body: some View {
+      // building.columns.fill
+      // puzzlepiece.fill
+      // paintbrush.pointed.fill
+      // square.stack.3d.up.fill
+      Label("Address", IDEIcon("􀣌", color: .brown, colorScheme: colorScheme, style: style, size: size))
+      Label("Library", IDEIcon("􀤩", color: .brown, colorScheme: colorScheme, style: style, size: size))
+      Label("Piece", IDEIcon("􀤛", color: .yellow, colorScheme: colorScheme, style: style, size: size))
+      Label("Brush", IDEIcon("􀣷", color: .purple, colorScheme: colorScheme, style: style, size: size))
+      Label("Layers", IDEIcon("􀐟", color: .pink, colorScheme: colorScheme, style: style, size: size))
+      Label("Core", IDEIcon("􀙚", color: .pink, colorScheme: colorScheme, style: style, size: size))
+      Label("Framework", IDEIcon("􀢠", color: .orange, colorScheme: colorScheme, style: style, size: size))
+      // Label("Framework", IDEIcon("􀢠", color: .red, colorScheme: colorScheme, style: style, size: size))
+      Label("User", IDEIcon("􀉪", color: .blue, colorScheme: colorScheme, style: style, size: size))
     }
   }
 

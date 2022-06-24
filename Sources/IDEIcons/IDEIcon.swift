@@ -1,9 +1,10 @@
 import SwiftUI
 
 // TODO: add array style
-// TODO: settle on API
-// TODO: caching
+// TODO: ~~settle on API~~
+// TODO: ~~caching~~
 // TODO: docs
+// TODO: script for generating icon upfront
 
 ///// Makes an icon.
 //public func IDEMakeIcon() -> CGImage? { nil }

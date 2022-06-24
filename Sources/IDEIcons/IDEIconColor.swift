@@ -43,17 +43,20 @@ struct AdaptiveColor {
 /// Specifies the color of an IDE icon.
 ///
 /// ![](IDEIconColor) 
-public enum IDEIconColor: CaseIterable {
+public enum IDEIconColor: String, CaseIterable {
   case monochrome
   case blue
   case brown
   case gray
   case green
   case orange
+  case pink // TODO: either rename or make more pink
   case purple
   case red
   case teal
   case yellow
+
+  // TODO: consider adding indigo, mint, and cyan
 }
 
 extension IDEIconColor {
@@ -82,6 +85,10 @@ extension IDEIconColor {
     case .orange: return AdaptiveColor(
       light: Color(red: 0.94, green: 0.623, blue: 0.283),
       dark: Color(red: 0.378, green: 0.223, blue: 0.006)
+    )
+    case .pink: return AdaptiveColor(
+      light: Color(red: 0.717, green: 0.309, blue: 0.69),
+      dark: Color(red: 0.274, green: 0.082, blue: 0.286)
     )
     case .purple: return AdaptiveColor(
       light: Color(red: 0.704, green: 0.452, blue: 0.831),
@@ -127,6 +134,10 @@ extension IDEIconColor {
     case .orange: return AdaptiveColor(
       light: Color(red: 0.921, green: 0.521, blue: 0),
       dark: Color(red: 0.921, green: 0.572, blue: 0.028)
+    )
+    case .pink: return AdaptiveColor(
+      light: Color(red: 0.647, green: 0.137, blue: 0.615),
+      dark: Color(red: 0.807, green: 0.231, blue: 0.835)
     )
     case .purple: return AdaptiveColor(
       light: Color(red: 0.623, green: 0.293, blue: 0.789),

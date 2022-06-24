@@ -94,14 +94,16 @@ public extension IDEIcon {
       //// + style == .outline ? 0.5 : 0 ?
       //.offsetBy(dx: 0, dy: size.yOffset + yOffsetAdjustment) // + style == .outline ? 0.5 : 0 ?
     
-    let paragraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.alignment = .center
-    // print(paragraphStyle.lineHeightMultiple)
-    // paragraphStyle.minimumLineHeight = symbolFrame.height
-    
     switch content {
     case .text(let string):
-      let textFrame = symbolFrame.offsetBy(dx: 0, dy: size.yOffset + yOffsetAdjustment)
+      let paragraphStyle = NSMutableParagraphStyle()
+      paragraphStyle.alignment = .center
+      paragraphStyle.minimumLineHeight = 0
+      // print(paragraphStyle.lineHeightMultiple)
+      paragraphStyle.minimumLineHeight = symbolFrame.height // - yOffsetAdjustment
+
+      let textFrame = symbolFrame.insetBy(dx: -1, dy: -1).offsetBy(dx: 0, dy: yOffsetAdjustment) // size.yOffset + yOffsetAdjustment)
+      // NSDottedFrameRect(textFrame)
       string.draw(in: textFrame, withAttributes: [
         .font: font,
         .paragraphStyle: paragraphStyle,
@@ -137,7 +139,6 @@ extension IDEIcon {
 extension CGSize {
   func centered(in rect: CGRect) -> CGRect {
     let centeredPoint = CGPoint(x: rect.minX + (rect.width - width) / 2, y: rect.minY + (rect.height - height) / 2)
-    let point = CGPoint(x: centeredPoint.x, y: centeredPoint.y)
-    return CGRect(origin: point, size: self)
+    return CGRect(origin: centeredPoint, size: self)
   }
 }

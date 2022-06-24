@@ -30,3 +30,8 @@ UIImage(IDEIcon("P"))
 CGImage(IDEIcon("P"))
 ```
 
+
+## Roadmap
+
+* Rethink API — perhaps just a single `IDEIcon()` function which returns a platform image object?
+
