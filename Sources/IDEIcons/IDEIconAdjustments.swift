@@ -9,6 +9,7 @@ extension IDEIcon {
       case "Ti": return .regular
       case "􀋲": return .black // FIXME: has no effect, it seems
       case "􀘱": return .ultraLight // FIXME: has no effect, it seems
+      case "⨍": return .black // FIXME: has no effect
       default: break
       }
       
@@ -16,7 +17,7 @@ extension IDEIcon {
       break
     }
     
-    return .medium
+    return style.fontWeight
   }
   
   var fontSizeAdjustment: CGFloat {
@@ -46,10 +47,10 @@ extension IDEIcon {
       switch size {
       case .regular:
         switch string {
-        case "@": return 1.5
-        case "#": return 1
+        case "@": return 3
+        case "#": return 3
         case "{}", "{ }": return 0
-        case "⨍": return 1
+        case "⨍": return 3
         case "􀋲": return 0
           // case "􀩲": xOffset = 0.5
         case "•": return 2
@@ -58,10 +59,10 @@ extension IDEIcon {
         }
       case .large:
         switch string {
-        case "@": return 1
-        case "#": return 0
+        case "@": return 4
+        case "#": return 3
         case "{}", "{ }": return 2.5
-        case "⨍": return 3.5
+        case "⨍": return 4.5
         case "􀋲": return 1
           //      case "Ti": return -2
         default: break

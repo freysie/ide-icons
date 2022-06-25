@@ -1,11 +1,9 @@
 import SwiftUI
-import PreviewScreenshots
+import PreviewsCapture
 
-struct IDEIcon_PreviewScreenshots: PreviewProvider {
+class IDEIcon_Screenshots: PreviewProvider, PreviewCaptureBatch {
   static var previews: some View {
-    ScreenshotGroup("../../Screenshots", relativeTo: #filePath) {
-      IDEIcon_Previews.ReadMeLogo(colorScheme: .light).screenshotName("IDEIcons~light")
-      IDEIcon_Previews.ReadMeLogo(colorScheme: .dark).screenshotName("IDEIcons~dark")
-    }
+    IDEIcon_Previews.ReadMeLogo()
+      .previewScreenshot("IDEIcons")
   }
 }

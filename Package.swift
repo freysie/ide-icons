@@ -13,12 +13,12 @@ let package = Package(
     .library(name: "IDEIcons", targets: ["IDEIcons"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/freyaariel/preview-screenshots.git", branch: "main"),
+    .package(url: "https://github.com/freyaariel/previews-capture.git", branch: "main"),
     .package(url: "https://github.com/yannickl/DynamicColor.git", from: "5.0.1"), // TODO: get rid of this
   ],
   targets: [
     .target(name: "IDEIcons", dependencies: [
-      .product(name: "PreviewScreenshots", package: "preview-screenshots"),
+      .product(name: "PreviewsCapture", package: "previews-capture"),
       .product(name: "DynamicColor", package: "DynamicColor"),
     ]),
   ]

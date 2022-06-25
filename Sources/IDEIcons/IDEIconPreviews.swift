@@ -57,21 +57,21 @@ struct IDEIcon_Previews: PreviewProvider {
   }
 
   struct ReadMeLogo: View {
-    var colorScheme: ColorScheme
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
       VStack {
         HStack(spacing: 1) { DataTreeExamples(style: .outline) }
         HStack(spacing: 1) { DataModelExamples() }
         HStack(spacing: 1) { SourceCodeExamples(style: .outline) }
-        HStack(alignment: .top, spacing: 4) {
-          Image(IDEIcon("I", color: .purple, colorScheme: colorScheme, size: .large))
-          Image(IDEIcon("D", color: .green, colorScheme: colorScheme, size: .large))
-          Image(IDEIcon("E", color: .orange, colorScheme: colorScheme, size: .large))
-          Image(IDEIcon("I", color: .blue, colorScheme: colorScheme, size: .large))
-          Image(IDEIcon("C", color: .red, colorScheme: colorScheme, size: .large))
-          Image(IDEIcon("O", color: .teal, colorScheme: colorScheme, size: .large))
-          Image(IDEIcon("N", color: .brown, colorScheme: colorScheme, size: .large))
-          Image(IDEIcon("S", color: .yellow, colorScheme: colorScheme, size: .large))
+        HStack(alignment: .top, spacing: 2) {
+          Image(IDEIcon("I", color: .purple, colorScheme: colorScheme, size: .large)).zIndex(8)
+          Image(IDEIcon("D", color: .green, colorScheme: colorScheme, size: .large)).zIndex(7)
+          Image(IDEIcon("E", color: .orange, colorScheme: colorScheme, size: .large)).zIndex(6)
+          Image(IDEIcon("I", color: .blue, colorScheme: colorScheme, size: .large)).zIndex(5)
+          Image(IDEIcon("C", color: .red, colorScheme: colorScheme, size: .large)).zIndex(4)
+          Image(IDEIcon("O", color: .teal, colorScheme: colorScheme, size: .large)).zIndex(3)
+          Image(IDEIcon("N", color: .brown, colorScheme: colorScheme, size: .large)).zIndex(2)
+          Image(IDEIcon("S", color: .yellow, colorScheme: colorScheme, size: .large)).zIndex(1)
         }
         HStack(spacing: 1) { SourceCodeExamples() }
           .environment(\.layoutDirection, .rightToLeft)
@@ -82,15 +82,13 @@ struct IDEIcon_Previews: PreviewProvider {
       }
       .padding()
       .labelStyle(.iconOnly)
-      .preferredColorScheme(colorScheme)
     }
   }
   
   static var previews: some View {
     Group {
-      
-      ReadMeLogo(colorScheme: .light)
-      ReadMeLogo(colorScheme: .dark)
+      ReadMeLogo().preferredColorScheme(.light)
+      ReadMeLogo().preferredColorScheme(.dark)
     }
     
     ColorEnum(colorScheme: .dark)
@@ -272,7 +270,8 @@ struct IDEIcon_Previews: PreviewProvider {
           // Label("Binary Data", IDEIcon(systemImage: "power", color: .purple, colorScheme: colorScheme, style: style, size: size))
         }
         Group {
-          Label("UUID", IDEIcon("􀘱", color: .purple, colorScheme: colorScheme, style: style, size: size))
+          Label("UUID", IDEIcon("#", color: .purple, colorScheme: colorScheme, style: style, size: size))
+          // Label("UUID", IDEIcon("􀘱", color: .purple, colorScheme: colorScheme, style: style, size: size)) // FIXME
           // Label("UUID", IDEIcon(systemImage: "barcode", color: .purple, colorScheme: colorScheme, style: style, size: size))
         }
         Label("URI", IDEIcon("U", color: .purple, colorScheme: colorScheme, style: style, size: size))

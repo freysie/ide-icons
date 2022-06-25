@@ -39,7 +39,7 @@ extension IDEIconSize {
 #endif
   
 #if os(macOS)
-  var yOffset: CGFloat { switch self { case .regular: return 1; case .large: return -2 } }
+  var yOffset: CGFloat { switch self { case .regular: return 0; case .large: return -4 } }
 #else
   var yOffset: CGFloat { 0 }
 #endif

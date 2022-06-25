@@ -164,4 +164,20 @@ extension IDEIconColor {
       dark: Color(white: 0, opacity: 0.5)
     )
   }
+
+  var simpleColor: Color {
+    switch self {
+    case .monochrome: return .primary
+    case .blue: return .blue
+    case .brown: return .brown
+    case .gray: return .gray
+    case .green: return .green
+    case .orange: return .orange
+    case .pink: return .pink
+    case .purple: return .purple
+    case .red: return .red
+    case .teal: return .teal
+    case .yellow: return .orange
+    }
+  }
 }

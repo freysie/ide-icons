@@ -4,7 +4,7 @@ Icons for use in integrated development environment apps.
 
 ## Overview
 
-This framework allows you to easily insert IDE-like icons in your app.
+This framework allows you to easily insert IDE-y icons in your app.
 
 `Image`, `Label`, `NSImage`, and `UIImage` have been extended to provide easy use of IDE icons.
 
@@ -33,11 +33,12 @@ IDEIcon("R", size: .regular)
 IDEIcon("L", size: .large)
 ```
 
-Icons can have different styles.
+Icons come in different styles.
 
 ```swift
 IDEIcon("D", style: .default)
 IDEIcon("O", style: .outline)
+IDEIcon("O", style: .simple)
 ```
 
 ## Topics

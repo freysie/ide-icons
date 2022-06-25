@@ -2,7 +2,11 @@
 
 Icons for use in integrated development environment apps.
 
-![](https://github.com/freyaariel/ide-icons/blob/main/Screenshots/IDEIcons.png?raw=true)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="Screenshots/IDEIcons~dark@2x.png?raw=true 2x, Screenshots/IDEIcons~dark@1x.png?raw=true 1x">
+  <source media="(prefers-color-scheme: light)" srcset="Screenshots/IDEIcons~light@2x.png?raw=true 2x, Screenshots/IDEIcons~light@1x.png?raw=true 1x">
+  <img alt="" src="Screenshots/IDEIcons~dark@1x.png?raw=true">
+</picture>
 
 
 ## Installation
@@ -16,7 +20,7 @@ import IDEIcons
 ```
 
 
-## Usage
+## Overview
 
 ```swift
 IDEIcon(_:color:colorScheme:style:size:)
@@ -31,7 +35,7 @@ CGImage(IDEIcon("P"))
 ```
 
 
-## Roadmap
-
-* Rethink API — perhaps just a single `IDEIcon()` function which returns a platform image object?
+<!--## Roadmap-->
+<!---->
+<!--* Rethink API — perhaps just a single `IDEIcon()` function which returns a platform image object?-->
 

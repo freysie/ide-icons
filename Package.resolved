@@ -11,11 +11,11 @@
         }
       },
       {
-        "package": "preview-screenshots",
-        "repositoryURL": "https://github.com/freyaariel/preview-screenshots.git",
+        "package": "previews-capture",
+        "repositoryURL": "https://github.com/freyaariel/previews-capture.git",
         "state": {
           "branch": "main",
-          "revision": "d8c927e96474721853c49386d39e72e1df251d3e",
+          "revision": "852f7c676a21065a761483b3e9918b5318863050",
           "version": null
         }
       }

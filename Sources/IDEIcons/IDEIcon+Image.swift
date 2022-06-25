@@ -44,29 +44,36 @@ public extension IDEIcon {
     switch style {
     case .default:
       context.beginPath()
-      context.addPath(roundedRect: bounds, cornerRadius: size.outerRadius)
+      context.addPath(roundedRect: bounds, cornerRadius: size.outerRadius * scale)
       context.closePath()
       context.setFillColor(DynamicColor(color.outlineColor[colorScheme]).cgColor)
       context.fillPath()
       
       context.beginPath()
-      context.addPath(roundedRect: bounds.insetBy(size.borderWidth), cornerRadius: borderRadius)
+      context.addPath(roundedRect: bounds.insetBy(size.borderWidth * scale), cornerRadius: borderRadius * scale)
       context.closePath()
       context.setFillColor(DynamicColor(color.borderColor[colorScheme]).cgColor)
       context.fillPath()
       
       context.beginPath()
-      context.addPath(roundedRect: bounds.insetBy(size.borderWidth + size.outlineWidth), cornerRadius: outlineRadius)
+      context.addPath(roundedRect: bounds.insetBy((size.borderWidth + size.outlineWidth) * scale), cornerRadius: outlineRadius * scale)
       context.closePath()
       context.setFillColor(DynamicColor(color.backgroundColor[colorScheme]).cgColor)
       context.fillPath()
       
     case .outline:
       context.beginPath()
-      context.addPath(roundedRect: bounds.insetBy(size.borderWidth + 0.5), cornerRadius: borderRadius)
+      context.addPath(roundedRect: bounds.insetBy(size.borderWidth + 0.5), cornerRadius: borderRadius * scale)
       context.closePath()
       context.setStrokeColor(DynamicColor(color.borderColor[colorScheme]).cgColor)
       context.strokePath()
+    
+    case .simple:
+      context.beginPath()
+      context.addPath(roundedRect: bounds, cornerRadius: borderRadius * scale)
+      context.closePath()
+      context.setFillColor(DynamicColor(color.simpleColor).cgColor)
+      context.fillPath()
     }
     
 #if os(macOS)
@@ -81,8 +88,7 @@ public extension IDEIcon {
     context.scaleBy(x: 1, y: -1)
 #endif
     
-    let weight = PlatformFont.Weight.regular
-    let font = PlatformFont.systemFont(ofSize: size.fontSize + fontSizeAdjustment, weight: weight)
+    let font = PlatformFont.systemFont(ofSize: (size.fontSize + fontSizeAdjustment) * scale, weight: fontWeight)
     
     var textColor = DynamicColor(.white).cgColor
     if style == .outline || color == .monochrome {
@@ -90,7 +96,7 @@ public extension IDEIcon {
     }
     
     let symbolFrame = bounds
-      .insetBy(size.borderWidth + size.outlineWidth)
+      .insetBy((size.borderWidth + size.outlineWidth) * scale)
       //// + style == .outline ? 0.5 : 0 ?
       //.offsetBy(dx: 0, dy: size.yOffset + yOffsetAdjustment) // + style == .outline ? 0.5 : 0 ?
     
@@ -98,27 +104,30 @@ public extension IDEIcon {
     case .text(let string):
       let paragraphStyle = NSMutableParagraphStyle()
       paragraphStyle.alignment = .center
-      paragraphStyle.minimumLineHeight = 0
+      // paragraphStyle.minimumLineHeight = 0
       // print(paragraphStyle.lineHeightMultiple)
-      paragraphStyle.minimumLineHeight = symbolFrame.height // - yOffsetAdjustment
+      // paragraphStyle.minimumLineHeight = symbolFrame.height // - yOffsetAdjustment
 
-      let textFrame = symbolFrame.insetBy(dx: -1, dy: -1).offsetBy(dx: 0, dy: yOffsetAdjustment) // size.yOffset + yOffsetAdjustment)
+      let textFrame = symbolFrame.insetBy(dx: -1, dy: -1).offsetBy(dx: 0, dy: size.yOffset + yOffsetAdjustment)
       // NSDottedFrameRect(textFrame)
       string.draw(in: textFrame, withAttributes: [
         .font: font,
         .paragraphStyle: paragraphStyle,
         .foregroundColor: PlatformColor(cgColor: textColor) as Any,
       ])
+      
     case .systemImage(let systemName):
       // NSDottedFrameRect(symbolFrame)
       
+#if os(macOS)
       let image = NSImage(systemSymbolName: systemName, accessibilityDescription: nil)!
         .withSymbolConfiguration(
-          .init(pointSize: size.fontSize + fontSizeAdjustment, weight: weight)
-          .applying(.init(paletteColors: [PlatformColor(cgColor: textColor)!]))
+          .init(pointSize: size.fontSize + fontSizeAdjustment, weight: style.fontWeight)
+            .applying(.init(paletteColors: [PlatformColor(cgColor: textColor)!]))
         )!
       
       image.draw(in: image.size.centered(in: symbolFrame))
+#endif
     default:
       break
     }

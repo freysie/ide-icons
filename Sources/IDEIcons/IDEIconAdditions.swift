@@ -17,7 +17,7 @@ public extension PlatformImage {
 #if os(macOS)
     self.init(cgImage: cgImage, size: icon.size.unscaledBounds.size)
 #else
-    self.init(cgImage: image, scale: scale, orientation: UIImage.Orientation.up)
+    self.init(cgImage: cgImage, scale: 0, orientation: UIImage.Orientation.up)
 #endif
   }
 }
