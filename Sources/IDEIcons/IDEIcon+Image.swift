@@ -30,7 +30,7 @@ public extension PlatformImage {
 
     self.init(size: icon.size.unscaledBounds.size, flipped: false) { bounds in
       var icon = icon
-      print(bounds)
+      // print(bounds)
       let context = NSGraphicsContext.current!.cgContext
       let isDark = NSAppearance.currentDrawing().bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
       icon.colorScheme = isDark ? .dark : .light
@@ -55,13 +55,19 @@ public extension Image {
   }
 }
 
+#if !os(macOS)
 var cache = [IDEIcon: PlatformImage]()
+#endif
 
 extension IDEIcon {
   var _image: PlatformImage {
+#if !os(macOS)
     if let cachedImage = cache[self] { return cachedImage }
+#endif
     let image = PlatformImage(self)
+#if !os(macOS)
     cache[self] = image
+#endif
     return image
   }
 }
