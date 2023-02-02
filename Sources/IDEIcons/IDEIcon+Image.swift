@@ -77,6 +77,7 @@ public extension IDEIcon {
   /// The resulting icon image.
 #if os(macOS)
   var image: NSImage { _image }
+  var templateImage: NSImage { let image = _image; image.isTemplate = true; return image }
 #else
   var image: UIImage { _image }
 #endif
