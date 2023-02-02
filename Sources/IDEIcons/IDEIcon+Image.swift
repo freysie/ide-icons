@@ -1,4 +1,3 @@
-import DynamicColor
 import SwiftUI
 #if os(watchOS)
 import WatchKit
@@ -124,33 +123,33 @@ public extension IDEIcon {
       context.beginPath()
       context.addPath(roundedRect: bounds, cornerRadius: size.outerRadius * scale)
       context.closePath()
-      context.setFillColor(DynamicColor(color.outlineColor[colorScheme]).cgColor)
+      context.setFillColor(PlatformColor(color.outlineColor[colorScheme]).cgColor)
       context.fillPath()
 
       context.beginPath()
       context.addPath(roundedRect: bounds.insetBy(size.borderWidth * scale), cornerRadius: borderRadius * scale)
       context.closePath()
-      context.setFillColor(DynamicColor(color.borderColor[colorScheme]).cgColor)
+      context.setFillColor(PlatformColor(color.borderColor[colorScheme]).cgColor)
       context.fillPath()
 
       context.beginPath()
       context.addPath(roundedRect: bounds.insetBy((size.borderWidth + size.outlineWidth) * scale), cornerRadius: outlineRadius * scale)
       context.closePath()
-      context.setFillColor(DynamicColor(color.backgroundColor[colorScheme]).cgColor)
+      context.setFillColor(PlatformColor(color.backgroundColor[colorScheme]).cgColor)
       context.fillPath()
 
     case .outline:
       context.beginPath()
       context.addPath(roundedRect: bounds.insetBy(size.borderWidth + 0.5), cornerRadius: borderRadius * scale)
       context.closePath()
-      context.setStrokeColor(DynamicColor(color.borderColor[colorScheme]).cgColor)
+      context.setStrokeColor(PlatformColor(color.borderColor[colorScheme]).cgColor)
       context.strokePath()
 
     case .simple:
       context.beginPath()
       context.addPath(roundedRect: bounds, cornerRadius: borderRadius * scale)
       context.closePath()
-      context.setFillColor(DynamicColor(color.simpleColor).cgColor)
+      context.setFillColor(PlatformColor(color.simpleColor).cgColor)
       context.fillPath()
     }
   }
@@ -158,9 +157,9 @@ public extension IDEIcon {
   func drawInterior(context: CGContext, bounds: CGRect) {
     let font = PlatformFont.systemFont(ofSize: (size.fontSize + fontSizeAdjustment) * scale, weight: fontWeight)
 
-    var textColor = DynamicColor(.white).cgColor
+    var textColor = PlatformColor(.white).cgColor
     if style == .outline || color == .monochrome {
-      textColor = DynamicColor(color.borderColor[colorScheme]).cgColor
+      textColor = PlatformColor(color.borderColor[colorScheme]).cgColor
     }
 
     let symbolFrame = bounds
