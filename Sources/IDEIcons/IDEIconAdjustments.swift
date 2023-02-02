@@ -47,8 +47,8 @@ extension IDEIcon {
       switch size {
       case .regular:
         switch string {
-        case "@": return 3
-        case "#": return 3
+        case "@": return 1
+        case "#": return 1
         case "{}", "{ }": return 0
         case "⨍": return 3
         case "􀋲": return 0

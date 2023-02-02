@@ -1,7 +1,6 @@
-import DynamicColor
 import SwiftUI
 
-// TODO: use asset catalog instead?
+// TODO: use asset catalog instead
 
 struct AdaptiveColor {
   let lightColor: Color

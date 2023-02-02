@@ -3,6 +3,8 @@ import SwiftUI
 import WatchKit
 #endif
 
+// TODO: make non-macOS rendering work again
+
 #if os(macOS)
 let scale = NSScreen.main?.backingScaleFactor ?? 1
 #elseif os(watchOS)
