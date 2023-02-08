@@ -2,22 +2,30 @@ import SwiftUI
 
 // TODO: use asset catalog instead
 
-struct AdaptiveColor {
-  let lightColor: Color
-  let darkColor: Color
+public struct AdaptiveColor {
+  public let lightColor: Color
+  public let darkColor: Color
   
-  init(light: Color, dark: Color) {
+  public init(light: Color, dark: Color) {
     lightColor = light
     darkColor = dark
   }
   
-  subscript(_ scheme: ColorScheme) -> Color {
+  public subscript(_ scheme: ColorScheme) -> Color {
     switch scheme {
     case .light: return lightColor
     case .dark: return darkColor
     @unknown default: fatalError()
     }
   }
+
+#if os(macOS)
+  public var nsColor: NSColor {
+    NSColor(name: nil) {
+      $0.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua ? NSColor(darkColor) : NSColor(lightColor)
+    }
+  }
+#endif
 }
 
 //public extension Color {
@@ -59,7 +67,7 @@ public enum IDEIconColor: String, CaseIterable {
 }
 
 extension IDEIconColor {
-  var backgroundColor: AdaptiveColor {
+  public var backgroundColor: AdaptiveColor {
     switch self {
     case .monochrome: return AdaptiveColor(
       light: .white,
@@ -108,7 +116,7 @@ extension IDEIconColor {
     }
   }
 
-  var borderColor: AdaptiveColor {
+  public var borderColor: AdaptiveColor {
     switch self {
     case .monochrome: return AdaptiveColor(
       light: Color(red: 0.443, green: 0.443, blue: 0.462),
@@ -157,14 +165,14 @@ extension IDEIconColor {
     }
   }
 
-  var outlineColor: AdaptiveColor {
+  public var outlineColor: AdaptiveColor {
     AdaptiveColor(
       light: Color(white: 0.96, opacity: 0.75),
       dark: Color(white: 0, opacity: 0.5)
     )
   }
 
-  var simpleColor: Color {
+  public var simpleColor: Color {
     switch self {
     case .monochrome: return .primary
     case .blue: return .blue
