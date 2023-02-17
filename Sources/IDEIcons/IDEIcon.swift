@@ -4,7 +4,7 @@ import SwiftUI
 // TODO: ~~settle on API~~
 // TODO: ~~caching~~
 // TODO: docs
-// TODO: script for generating icon upfront
+// TODO: script for generating icon upfront?
 
 ///// Makes an icon.
 //public func IDEMakeIcon() -> CGImage? { nil }
@@ -49,14 +49,3 @@ public struct IDEIcon: Hashable {
     self.init(.systemImage(systemImage), color: color, colorScheme: colorScheme, style: style, size: size)
   }
 }
-
-//extension IDEIcon: Hashable {
-//  public static func == (lhs: IDEIcon, rhs: IDEIcon) -> Bool { lhs.hashValue == rhs.hashValue }
-//  public func hash(into hasher: inout Hasher) {
-//    content.hash(into: &hasher)
-//    color.hash(into: &hasher)
-//    colorScheme.hash(into: &hasher)
-//    style.hash(into: &hasher)
-//    size.hash(into: &hasher)
-//  }
-//}

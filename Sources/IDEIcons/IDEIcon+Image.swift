@@ -118,55 +118,75 @@ public extension IDEIcon {
   }
 
   func drawBackground(context: CGContext, bounds: CGRect) {
+    let deviceBounds = context.convertToDeviceSpace(bounds)
+    let scale = deviceBounds.size.height / bounds.size.height
+
     let outlineRadius = size.outerRadius - (size.borderWidth + size.outlineWidth)
     let borderRadius = size.outerRadius - size.borderWidth
 
     switch style {
     case .default:
       context.beginPath()
-      context.addPath(roundedRect: bounds, cornerRadius: size.outerRadius * scale)
+      context.addPath(roundedRect: bounds, cornerRadius: size.outerRadius)
       context.closePath()
       context.setFillColor(PlatformColor(color.outlineColor[colorScheme]).cgColor)
       context.fillPath()
 
       context.beginPath()
-      context.addPath(roundedRect: bounds.insetBy(size.borderWidth * scale), cornerRadius: borderRadius * scale)
+      context.addPath(roundedRect: bounds.insetBy(size.borderWidth), cornerRadius: borderRadius)
       context.closePath()
       context.setFillColor(PlatformColor(color.borderColor[colorScheme]).cgColor)
       context.fillPath()
 
       context.beginPath()
-      context.addPath(roundedRect: bounds.insetBy((size.borderWidth + size.outlineWidth) * scale), cornerRadius: outlineRadius * scale)
+      context.addPath(roundedRect: bounds.insetBy((size.borderWidth + size.outlineWidth)), cornerRadius: outlineRadius)
       context.closePath()
       context.setFillColor(PlatformColor(color.backgroundColor[colorScheme]).cgColor)
       context.fillPath()
 
     case .outline:
+      let lineWidth = scale >= 2 ? 1 / scale : 1
+      context.setLineWidth(lineWidth)
       context.beginPath()
-      context.addPath(roundedRect: bounds.insetBy(size.borderWidth + 0.5), cornerRadius: borderRadius * scale)
+      context.addPath(roundedRect: bounds.insetBy(size.borderWidth + lineWidth / 2), cornerRadius: borderRadius)
       context.closePath()
       context.setStrokeColor(PlatformColor(color.borderColor[colorScheme]).cgColor)
       context.strokePath()
 
     case .simple:
       context.beginPath()
-      context.addPath(roundedRect: bounds, cornerRadius: borderRadius * scale)
+      context.addPath(roundedRect: bounds, cornerRadius: borderRadius * 1.5)
       context.closePath()
       context.setFillColor(PlatformColor(color.simpleColor).cgColor)
+      context.fillPath()
+
+    case .simpleHighlighted:
+      context.beginPath()
+      context.addPath(roundedRect: bounds, cornerRadius: borderRadius * 1.5)
+      context.closePath()
+      context.setFillColor(.white)
       context.fillPath()
     }
   }
 
   func drawInterior(context: CGContext, bounds: CGRect) {
-    let font = PlatformFont.systemFont(ofSize: (size.fontSize + fontSizeAdjustment) * scale, weight: fontWeight)
+    // let deviceBounds = context.convertToDeviceSpace(bounds)
+    // let scale = deviceBounds.size.height / bounds.size.height
+
+    let font = PlatformFont.systemFont(ofSize: (size.fontSize + fontSizeAdjustment), weight: fontWeight)
 
     var textColor = PlatformColor(.white).cgColor
     if style == .outline || color == .monochrome {
       textColor = PlatformColor(color.borderColor[colorScheme]).cgColor
     }
 
+    if style == .simpleHighlighted {
+      context.setBlendMode(.clear)
+      textColor = .black
+    }
+
     let symbolFrame = bounds
-      .insetBy((size.borderWidth + size.outlineWidth) * scale)
+      .insetBy((size.borderWidth + size.outlineWidth))
       //// + style == .outline ? 0.5 : 0 ?
       //.offsetBy(dx: 0, dy: size.yOffset + yOffsetAdjustment) // + style == .outline ? 0.5 : 0 ?
 
@@ -178,7 +198,7 @@ public extension IDEIcon {
       // print(paragraphStyle.lineHeightMultiple)
       // paragraphStyle.minimumLineHeight = symbolFrame.height // - yOffsetAdjustment
 
-      let textFrame = symbolFrame.insetBy(dx: -1, dy: -1).offsetBy(dx: 0, dy: size.yOffset + yOffsetAdjustment)
+      let textFrame = symbolFrame.insetBy(-1).offsetBy(dx: 0, dy: size.yOffset + yOffsetAdjustment)
       // NSDottedFrameRect(textFrame)
       string.draw(in: textFrame, withAttributes: [
         .font: font,
@@ -190,13 +210,20 @@ public extension IDEIcon {
       // NSDottedFrameRect(symbolFrame)
 
 #if os(macOS)
-      let image = NSImage(systemSymbolName: systemName, accessibilityDescription: nil)!
+      let image = NSImage(systemSymbolName: systemName, accessibilityDescription: nil)?
         .withSymbolConfiguration(
-          .init(pointSize: size.fontSize + fontSizeAdjustment, weight: style.fontWeight)
-            .applying(.init(paletteColors: [PlatformColor(cgColor: textColor)!]))
+          NSImage.SymbolConfiguration(pointSize: size.fontSize + fontSizeAdjustment, weight: style.fontWeight, scale: .small)
+            .applying(NSImage.SymbolConfiguration(paletteColors: [PlatformColor(cgColor: textColor) ?? .clear]))
         )!
 
-      image.draw(in: image.size.centered(in: symbolFrame))
+      guard let image else { return }
+
+      image.draw(
+        in: image.size.centered(in: symbolFrame.insetBy(1)).offsetBy(dx: 0, dy: yOffsetAdjustment).integral,
+        from: .zero,
+        operation: style == .simpleHighlighted ? .destinationOut : .sourceOver,
+        fraction: 1
+      )
 #endif
     default:
       break

@@ -12,11 +12,11 @@ Icons for use in integrated development environment apps.
 ## Installation
 
 ```swift
-.package(url: "https://github.com/freyaalminde/ide-icons.git", branch: "main")
+.package(url: "https://github.com/freyaalminde/ide-icons.git", branch: "main"),
 ```
 
 ```swift
-import IDEIcons
+.product(name: "IDEIcons", package: "ide-icons"),
 ```
 
 

@@ -1,9 +1,10 @@
 import SwiftUI
 import PreviewsCapture
 
-class IDEIcon_Screenshots: PreviewProvider, PreviewCaptureBatch {
+class IDEIcon_Screenshots: PreviewProvider, ScreenshotProvider {
   static var previews: some View {
     IDEIcon_Previews.ReadMeLogo()
-      // .previewScreenshot("IDEIcons")
+      .previewDisplayName("IDEIcons")
+      .task { await ScreenshotController().saveAll() }
   }
 }

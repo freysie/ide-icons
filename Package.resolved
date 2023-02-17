@@ -5,8 +5,8 @@
         "package": "previews-capture",
         "repositoryURL": "https://github.com/freyaariel/previews-capture.git",
         "state": {
-          "branch": "main",
-          "revision": "d239361723804aa2aa0bb905cfa1626edd535f2c",
+          "branch": "refactor",
+          "revision": "8a9b4ab5c30fa87a04b0aff0af829286e5bc3807",
           "version": null
         }
       }

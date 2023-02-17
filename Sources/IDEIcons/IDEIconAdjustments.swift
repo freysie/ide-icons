@@ -7,9 +7,6 @@ extension IDEIcon {
       switch string {
       case "#": return .light
       case "Ti": return .regular
-      case "􀋲": return .black // FIXME: has no effect, it seems
-      case "􀘱": return .ultraLight // FIXME: has no effect, it seems
-      case "⨍": return .black // FIXME: has no effect
       default: break
       }
       
@@ -45,12 +42,12 @@ extension IDEIcon {
     switch content {
     case .text(let string):
       switch size {
-      case .regular:
+      case .small, .regular:
         switch string {
         case "@": return 1
         case "#": return 1
         case "{}", "{ }": return 0
-        case "⨍": return 3
+        case "⨍": return 1
         case "􀋲": return 0
           // case "􀩲": xOffset = 0.5
         case "•": return 2
@@ -68,7 +65,13 @@ extension IDEIcon {
         default: break
         }
       }
-      
+
+    case .systemImage(let name) :
+      switch name {
+      case "list.bullet": return 0.6
+      default: break
+      }
+
     default:
       break
     }

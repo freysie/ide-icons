@@ -38,27 +38,47 @@ struct IDEIcon_Previews: PreviewProvider {
   }
 
   struct ReadMeLogo: View {
+    var simple = false
+
+    var style: IDEIconStyle { simple ? .simple : .default }
+    var altStyle: IDEIconStyle { simple ? .simpleHighlighted : .outline }
+
     var body: some View {
       VStack {
-        HStack(spacing: 1) { DataTreeExamples(style: .outline) }
-        HStack(spacing: 1) { DataModelExamples() }
-        HStack(spacing: 1) { SourceCodeExamples(style: .outline) }
+        HStack(spacing: 2) { DataTreeExamples(style: altStyle) }
+        HStack(spacing: 2) { SourceCodeExamples(style: style) }
+        HStack(spacing: 2) { DataModelExamples(style: altStyle) }
         HStack(alignment: .top, spacing: 2) {
-          Image(IDEIcon("I", color: .purple, size: .large)).zIndex(8)
-          Image(IDEIcon("D", color: .green, size: .large)).zIndex(7)
-          Image(IDEIcon("E", color: .orange, size: .large)).zIndex(6)
-          Image(IDEIcon("I", color: .blue, size: .large)).zIndex(5)
-          Image(IDEIcon("C", color: .red, size: .large)).zIndex(4)
-          Image(IDEIcon("O", color: .teal, size: .large)).zIndex(3)
-          Image(IDEIcon("N", color: .brown, size: .large)).zIndex(2)
-          Image(IDEIcon("S", color: .yellow, size: .large)).zIndex(1)
+          Image(IDEIcon("I", color: .purple, style: style, size: .large)).zIndex(9)
+          Image(IDEIcon("D", color: .green, style: style, size: .large)).zIndex(8)
+          Image(IDEIcon("E", color: .orange, style: style, size: .large)).zIndex(7)
+          Image(IDEIcon("I", color: .blue, style: style, size: .large)).zIndex(6)
+          Image(IDEIcon("C", color: .red, style: style, size: .large)).zIndex(5)
+          Image(IDEIcon("O", color: .teal, style: style, size: .large)).zIndex(4)
+          Image(IDEIcon("N", color: .brown, style: style, size: .large)).zIndex(3)
+          Image(IDEIcon("S", color: .yellow, style: style, size: .large)).zIndex(2)
+
+          //Image(IDEIcon("S", color: .blue, size: .large)).zIndex(6)
+          //Image(IDEIcon("Y", color: .red, size: .large)).zIndex(5)
+          //Image(IDEIcon("M", color: .teal, size: .large)).zIndex(4)
+          //Image(IDEIcon("B", color: .brown, size: .large)).zIndex(3)
+          //Image(IDEIcon("O", color: .yellow, size: .large)).zIndex(2)
+          //Image(IDEIcon("L", color: .gray, size: .large)).zIndex(1)
+          //Image(IDEIcon("S", color: .pink, size: .large)).zIndex(0)
         }
-        HStack(spacing: 1) { SourceCodeExamples() }
-          .environment(\.layoutDirection, .rightToLeft)
-        HStack(spacing: 1) { DataModelExamples(style: .outline) }
-          .environment(\.layoutDirection, .rightToLeft)
-        HStack(spacing: 1) { DataTreeExamples() }
-          .environment(\.layoutDirection, .rightToLeft)
+        HStack(spacing: 2) { DataModelExamples(style: style) }
+          //.environment(\.layoutDirection, .rightToLeft)
+        HStack(spacing: 2) { SourceCodeExamples(style: altStyle) }
+          //.environment(\.layoutDirection, .rightToLeft)
+        HStack(spacing: 2) { DataTreeExamples(style: style) }
+          //.environment(\.layoutDirection, .rightToLeft)
+
+        // Group {
+        //   HStack(spacing: 2) { SourceCodeExamples(style: .simple) }
+        //   HStack(spacing: 2) { DataModelExamples(style: .simple) }
+        //   HStack(spacing: 2) { DataTreeExamples(style: .simple) }
+        //   HStack(spacing: 2) { DataTreeExamples(style: .simpleHighlighted) }
+        // }
       }
       .padding()
       .labelStyle(.iconOnly)
@@ -67,11 +87,21 @@ struct IDEIcon_Previews: PreviewProvider {
 
   static var previews: some View {
     Group {
-      ReadMeLogo()
+      ReadMeLogo(simple: true).previewDisplayName("Logo (Simple)")//.background(.pink)
+      ReadMeLogo().previewDisplayName("Logo")
     }
     
     ColorEnum()
       .padding()
+      .previewDisplayName("Colors")
+
+    SizeEnum()
+      .padding()
+      .previewDisplayName("Sizes")
+
+    StyleEnum()
+      .padding()
+      .previewDisplayName("Styles")
 
     HStack(spacing: 2) {
       ForEach(String.alphabet, id: \.self) {
@@ -80,6 +110,7 @@ struct IDEIcon_Previews: PreviewProvider {
     }
     .padding()
     .labelStyle(.iconOnly)
+    .previewDisplayName("Alphabet")
 
     Group {
       HStack(alignment: .top, spacing: 50) {
@@ -87,24 +118,23 @@ struct IDEIcon_Previews: PreviewProvider {
         VStack(alignment: .leading) { DebuggerExamples(size: .large) }
       }
       .padding()
+      .previewDisplayName("Debugger Examples")
+
+      HStack(alignment: .top, spacing: 50) {
+        VStack(alignment: .leading) { DatabaseObjectExamples() }
+        VStack(alignment: .leading) { DatabaseObjectExamples(size: .large) }
+      }
+      .padding()
+      .previewDisplayName("Database Object Examples")
+
+      HStack(alignment: .top, spacing: 50) {
+        VStack(alignment: .leading) { DatabaseExamples() }
+        VStack(alignment: .leading) { DatabaseExamples(size: .large) }
+      }
+      .padding()
+      .previewDisplayName("Database Examples")
     }
 
-//    Group {
-//      HStack(alignment: .top, spacing: 50) {
-//        VStack(alignment: .leading) { DatabaseObjectExamples() }
-//        VStack(alignment: .leading) { DatabaseObjectExamples(size: .large) }
-//      }
-//      .padding()
-//      .preferredColorScheme(.dark)
-//
-//      HStack(alignment: .top, spacing: 50) {
-//        VStack(alignment: .leading) { DatabaseObjectExamples() }
-//        VStack(alignment: .leading) { DatabaseObjectExamples(size: .large) }
-//      }
-//      .padding()
-//      .preferredColorScheme(.light)
-//    }
-//
 //    HStack(alignment: .top, spacing: 50) {
 //      VStack(alignment: .leading) { SourceCodeExamples() }
 //      VStack(alignment: .leading) { DataModelExamples() }
@@ -186,8 +216,8 @@ struct IDEIcon_Previews: PreviewProvider {
         // Label("Snippet", IDEIcon(systemImage: "curlybraces", color: .gray, style: style, size: size))
       }
 
-      Label("Comment", IDEIcon("􀋲", color: .monochrome, style: style, size: size))
-//      / Label("Comment", IDEIcon(systemImage: "list.bullet", color: .monochrome, style: style, size: size))
+      //Label("Comment", IDEIcon("􀋲", color: .monochrome, style: style, size: size))
+      Label("Comment", IDEIcon(systemImage: "list.bullet", color: .monochrome, style: style, size: size))
     }
   }
 
@@ -197,23 +227,21 @@ struct IDEIcon_Previews: PreviewProvider {
 
     var body: some View {
       Group {
-        Label("Undefined", IDEIcon("?", color: .purple, style: style, size: size))
         Label("Number", IDEIcon("N", color: .purple, style: style, size: size))
         Label("String", IDEIcon("S", color: .purple, style: style, size: size))
         Label("Boolean", IDEIcon("B", color: .purple, style: style, size: size))
         Label("Date", IDEIcon("D", color: .purple, style: style, size: size))
         Group {
-          Label("Binary Data", IDEIcon("􀆨", color: .purple, style: style, size: size))
-          // Label("Binary Data", IDEIcon(systemImage: "power", color: .purple, style: style, size: size))
+          Label("Binary Data", IDEIcon(systemImage: "power", color: .purple, style: style, size: size))
         }
         Group {
           Label("UUID", IDEIcon("#", color: .purple, style: style, size: size))
-          // Label("UUID", IDEIcon("􀘱", color: .purple, style: style, size: size)) // FIXME
-          // Label("UUID", IDEIcon(systemImage: "barcode", color: .purple, style: style, size: size))
+          Label("UUID", IDEIcon(systemImage: "barcode", color: .purple, style: style, size: size))
         }
         Label("URI", IDEIcon("U", color: .purple, style: style, size: size))
         Label("Transformable", IDEIcon("T", color: .purple, style: style, size: size))
         Label("Time Interval", IDEIcon("Ti", color: .purple, style: style, size: size))
+        Label("Undefined", IDEIcon("?", color: .purple, style: style, size: size))
       }
 
       Group {
@@ -250,8 +278,11 @@ struct IDEIcon_Previews: PreviewProvider {
 
     var body: some View {
       Label("Point", IDEIcon("•", color: .purple, style: style, size: size))
-      Label("IP Address", IDEIcon("􀩲", color: .purple, style: style, size: size))
-      Label("TS Vector", IDEIcon("􀊫", color: .purple, style: style, size: size))
+      // Label("IP Address", IDEIcon("􀩲", color: .purple, style: style, size: size))
+      // Label("TS Vector", IDEIcon("􀊫", color: .purple, style: style, size: size))
+      Label("Point", IDEIcon(systemImage: "smallcircle.filled.circle", color: .purple, style: style, size: size))
+      Label("IP Address", IDEIcon(systemImage: "rectangle.connected.to.line.below", color: .purple, style: style, size: size))
+      Label("TS Vector", IDEIcon(systemImage: "magnifyingglass", color: .purple, style: style, size: size))
     }
   }
 
@@ -260,19 +291,15 @@ struct IDEIcon_Previews: PreviewProvider {
     var style = IDEIconStyle.default
 
     var body: some View {
-      // building.columns.fill
-      // puzzlepiece.fill
-      // paintbrush.pointed.fill
-      // square.stack.3d.up.fill
-      Label("Address", IDEIcon("􀣌", color: .brown, style: style, size: size))
-      Label("Library", IDEIcon("􀤩", color: .brown, style: style, size: size))
-      Label("Piece", IDEIcon("􀤛", color: .yellow, style: style, size: size))
-      Label("Brush", IDEIcon("􀣷", color: .purple, style: style, size: size))
-      Label("Layers", IDEIcon("􀐟", color: .pink, style: style, size: size))
-      Label("Core", IDEIcon("􀙚", color: .pink, style: style, size: size))
-      Label("Framework", IDEIcon("􀢠", color: .orange, style: style, size: size))
-      // Label("Framework", IDEIcon("􀢠", color: .red, style: style, size: size))
-      Label("User", IDEIcon("􀉪", color: .blue, style: style, size: size))
+      Label("Address", IDEIcon(systemImage: "gearshape.fill", color: .brown, style: style, size: size))
+      Label("Library", IDEIcon(systemImage: "building.columns.fill", color: .brown, style: style, size: size))
+      Label("Piece", IDEIcon(systemImage: "puzzlepiece.fill", color: .yellow, style: style, size: size))
+      Label("Brush", IDEIcon(systemImage: "paintbrush.pointed.fill", color: .purple, style: style, size: size))
+      Label("Layers", IDEIcon(systemImage: "square.stack.3d.up.fill", color: .pink, style: style, size: size))
+      Label("Core", IDEIcon(systemImage: "chevron.left.forwardslash.chevron.right", color: .pink, style: style, size: size))
+      Label("Framework", IDEIcon(systemImage: "latch.2.case.fill", color: .orange, style: style, size: size))
+      // Label("Framework", IDEIcon(systemImage: "latch.2.case.fill", color: .red, style: style, size: size))
+      Label("User", IDEIcon(systemImage: "person.fill", color: .blue, style: style, size: size))
     }
   }
 
@@ -286,6 +313,11 @@ struct IDEIcon_Previews: PreviewProvider {
         Label("View", IDEIcon("􀬸", color: .teal, style: style, size: size))
         Label("Procedure", IDEIcon("􀤏", color: .orange, style: style, size: size))
         Label("Trigger", IDEIcon("􀋦", color: .orange, style: style, size: size))
+
+        Label("Table", IDEIcon(systemImage: "tablecells", color: .teal, style: style, size: size))
+        Label("View", IDEIcon(systemImage: "rectangle.and.text.magnifyingglass", color: .teal, style: style, size: size))
+        Label("Procedure", IDEIcon(systemImage: "scroll", color: .orange, style: style, size: size))
+        Label("Trigger", IDEIcon(systemImage: "bolt.fill", color: .orange, style: style, size: size))
       }
       
       Group {
@@ -293,6 +325,11 @@ struct IDEIcon_Previews: PreviewProvider {
         Label("View", IDEIcon("􀬸", color: .monochrome, style: style, size: size))
         Label("Procedure", IDEIcon("􀤏", color: .monochrome, style: style, size: size))
         Label("Trigger", IDEIcon("􀋦", color: .monochrome, style: style, size: size))
+
+        Label("Table", IDEIcon(systemImage: "tablecells", color: .monochrome, style: style, size: size))
+        Label("View", IDEIcon(systemImage: "rectangle.and.text.magnifyingglass", color: .monochrome, style: style, size: size))
+        Label("Procedure", IDEIcon(systemImage: "scroll", color: .monochrome, style: style, size: size))
+        Label("Trigger", IDEIcon(systemImage: "bolt.fill", color: .monochrome, style: style, size: size))
       }
       
       // Label("Table", IDEIcon(systemImage: "tablecells", color: .teal, style: style, size: size))
