@@ -13,7 +13,7 @@ let package = Package(
     .library(name: "IDEIcons", targets: ["IDEIcons"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/freyaariel/previews-capture.git", branch: "refactor"),
+    .package(url: "https://github.com/freyaalminde/previews-capture.git", branch: "refactor"),
   ],
   targets: [
     .target(name: "IDEIcons", dependencies: [
