@@ -29,7 +29,7 @@ public extension PlatformImage {
 //    guard let cgImage = icon.cgImage else { self.init(); return }
 //    self.init(cgImage: cgImage, size: icon.size.unscaledBounds.size)
 
-    self.init(size: icon.size.unscaledBounds.size, flipped: false) { bounds in
+    self.init(size: icon.unscaledBounds.size, flipped: false) { bounds in
       var icon = icon
       // print(bounds)
       let context = NSGraphicsContext.current!.cgContext
@@ -73,6 +73,12 @@ extension IDEIcon {
   }
 }
 
+public enum IDEIconSize {
+  public static let small = 14.0
+  public static let regular = 16.0
+  public static let large = 32.0
+}
+
 public extension IDEIcon {
   /// The resulting icon image.
 #if os(macOS)
@@ -82,12 +88,19 @@ public extension IDEIcon {
   var image: UIImage { _image }
 #endif
 
+  var fontSize: CGFloat { (size / 1.5).rounded() }
+  var outerRadius: CGFloat { size < 24 ? 3 : 7 }
+  var outlineWidth: CGFloat { 1 }
+  var borderWidth: CGFloat { 1 }
+  var yOffset: CGFloat { size < IDEIconSize.large ? 0 : -3 } // FIXME: just center it, omg
+  var unscaledBounds: CGRect { CGRectMake(0, 0, size, size) }
+
   /// The resulting CoreGraphics image object.
   var cgImage: CGImage? {
     guard let context = CGContext(
       data: nil,
-      width: Int(size.frameSize * scale),
-      height: Int(size.frameSize * scale),
+      width: Int(size * scale),
+      height: Int(size * scale),
       bitsPerComponent: 8,
       bytesPerRow: 0,
       space: CGColorSpace(name: CGColorSpace.genericRGBLinear)!,
@@ -96,7 +109,7 @@ public extension IDEIcon {
       return nil
     }
 
-    let bounds = CGRect(origin: .zero, size: CGSize(width: size.frameSize * scale, height: size.frameSize * scale))
+    let bounds = CGRect(origin: .zero, size: CGSize(width: size * scale, height: size * scale))
 
     drawBackground(context: context, bounds: bounds)
 
@@ -121,25 +134,25 @@ public extension IDEIcon {
     let deviceBounds = context.convertToDeviceSpace(bounds)
     let scale = deviceBounds.size.height / bounds.size.height
 
-    let outlineRadius = size.outerRadius - (size.borderWidth + size.outlineWidth)
-    let borderRadius = size.outerRadius - size.borderWidth
+    let outlineRadius = outerRadius - (borderWidth + outlineWidth)
+    let borderRadius = outerRadius - borderWidth
 
     switch style {
     case .default:
       context.beginPath()
-      context.addPath(roundedRect: bounds, cornerRadius: size.outerRadius)
+      context.addPath(roundedRect: bounds, cornerRadius: outerRadius)
       context.closePath()
       context.setFillColor(PlatformColor(color.outlineColor[colorScheme]).cgColor)
       context.fillPath()
 
       context.beginPath()
-      context.addPath(roundedRect: bounds.insetBy(size.borderWidth), cornerRadius: borderRadius)
+      context.addPath(roundedRect: bounds.insetBy(borderWidth), cornerRadius: borderRadius)
       context.closePath()
       context.setFillColor(PlatformColor(color.borderColor[colorScheme]).cgColor)
       context.fillPath()
 
       context.beginPath()
-      context.addPath(roundedRect: bounds.insetBy((size.borderWidth + size.outlineWidth)), cornerRadius: outlineRadius)
+      context.addPath(roundedRect: bounds.insetBy((borderWidth + outlineWidth)), cornerRadius: outlineRadius)
       context.closePath()
       context.setFillColor(PlatformColor(color.backgroundColor[colorScheme]).cgColor)
       context.fillPath()
@@ -148,7 +161,7 @@ public extension IDEIcon {
       let lineWidth = scale >= 2 ? 1 / scale : 1
       context.setLineWidth(lineWidth)
       context.beginPath()
-      context.addPath(roundedRect: bounds.insetBy(size.borderWidth + lineWidth / 2), cornerRadius: borderRadius)
+      context.addPath(roundedRect: bounds.insetBy(borderWidth + lineWidth / 2), cornerRadius: borderRadius)
       context.closePath()
       context.setStrokeColor(PlatformColor(color.borderColor[colorScheme]).cgColor)
       context.strokePath()
@@ -173,7 +186,7 @@ public extension IDEIcon {
     // let deviceBounds = context.convertToDeviceSpace(bounds)
     // let scale = deviceBounds.size.height / bounds.size.height
 
-    let font = PlatformFont.systemFont(ofSize: (size.fontSize + fontSizeAdjustment), weight: fontWeight)
+    let font = PlatformFont.systemFont(ofSize: (fontSize + fontSizeAdjustment), weight: fontWeight)
 
     var textColor = PlatformColor(.white).cgColor
     if style == .outline || color == .monochrome {
@@ -186,25 +199,31 @@ public extension IDEIcon {
     }
 
     let symbolFrame = bounds
-      .insetBy((size.borderWidth + size.outlineWidth))
+      .insetBy(borderWidth + outlineWidth)
       //// + style == .outline ? 0.5 : 0 ?
-      //.offsetBy(dx: 0, dy: size.yOffset + yOffsetAdjustment) // + style == .outline ? 0.5 : 0 ?
+      //.offsetBy(dx: 0, dy: yOffset + yOffsetAdjustment) // + style == .outline ? 0.5 : 0 ?
+
+    //NSDottedFrameRect(symbolFrame)
 
     switch content {
     case .text(let string):
       let paragraphStyle = NSMutableParagraphStyle()
       paragraphStyle.alignment = .center
-      // paragraphStyle.minimumLineHeight = 0
+//      paragraphStyle.minimumLineHeight = size - borderWidth * 2 - outlineWidth * 2
+      //paragraphStyle.lineHeightMultiple = size
       // print(paragraphStyle.lineHeightMultiple)
       // paragraphStyle.minimumLineHeight = symbolFrame.height // - yOffsetAdjustment
 
-      let textFrame = symbolFrame.insetBy(-1).offsetBy(dx: 0, dy: size.yOffset + yOffsetAdjustment)
-      // NSDottedFrameRect(textFrame)
-      string.draw(in: textFrame, withAttributes: [
+      let attributedString = NSAttributedString(string: string, attributes: [
         .font: font,
         .paragraphStyle: paragraphStyle,
         .foregroundColor: PlatformColor(cgColor: textColor) as Any,
       ])
+
+      let dy = (symbolFrame.height - attributedString.size().height) / 2
+      let textFrame = symbolFrame.integral.offsetBy(dx: 0, dy: yOffsetAdjustment - dy)
+      // NSDottedFrameRect(textFrame)
+      attributedString.draw(in: textFrame)
 
     case .systemImage(let systemName):
       // NSDottedFrameRect(symbolFrame)
@@ -212,7 +231,7 @@ public extension IDEIcon {
 #if os(macOS)
       let image = NSImage(systemSymbolName: systemName, accessibilityDescription: nil)?
         .withSymbolConfiguration(
-          NSImage.SymbolConfiguration(pointSize: size.fontSize + fontSizeAdjustment, weight: style.fontWeight, scale: .small)
+          NSImage.SymbolConfiguration(pointSize: fontSize + fontSizeAdjustment, weight: style.fontWeight, scale: .small)
             .applying(NSImage.SymbolConfiguration(paletteColors: [PlatformColor(cgColor: textColor) ?? .clear]))
         )!
 

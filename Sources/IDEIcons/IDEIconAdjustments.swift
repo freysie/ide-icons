@@ -41,12 +41,11 @@ extension IDEIcon {
   var yOffsetAdjustment: CGFloat {
     switch content {
     case .text(let string):
-      switch size {
-      case .small, .regular:
+      if size <= IDEIconSize.regular {
         switch string {
         case "@": return 1
-        case "#": return 1
-        case "{}", "{ }": return 0
+        case "#": return 0
+        case "{}", "{ }": return 1
         case "⨍": return 1
         case "􀋲": return 0
           // case "􀩲": xOffset = 0.5
@@ -54,7 +53,7 @@ extension IDEIcon {
           //      case "Ti": return -2
         default: break
         }
-      case .large:
+      } else {
         switch string {
         case "@": return 4
         case "#": return 3
@@ -68,7 +67,7 @@ extension IDEIcon {
 
     case .systemImage(let name) :
       switch name {
-      case "list.bullet": return 0.6
+      case "list.bullet": return 0
       default: break
       }
 

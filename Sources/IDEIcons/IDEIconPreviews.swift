@@ -29,8 +29,8 @@ struct IDEIcon_Previews: PreviewProvider {
   struct SizeEnum: View {
     var body: some View {
       VStack(alignment: .leading) {
-        ForEach(IDEIconSize.allCases, id: \.self) { size in
-          Label("`.\(String(describing: size))`", IDEIcon("P", size: size))
+        ForEach([10, 14, 16, 20, 24, 32, 40, 48, 64, 96], id: \.self) { size in
+          Label("\(size) pt", IDEIcon("P", size: CGFloat(size)))
         }
       }
       .fixedSize()
@@ -49,22 +49,22 @@ struct IDEIcon_Previews: PreviewProvider {
         HStack(spacing: 2) { SourceCodeExamples(style: style) }
         HStack(spacing: 2) { DataModelExamples(style: altStyle) }
         HStack(alignment: .top, spacing: 2) {
-          Image(IDEIcon("I", color: .purple, style: style, size: .large)).zIndex(9)
-          Image(IDEIcon("D", color: .green, style: style, size: .large)).zIndex(8)
-          Image(IDEIcon("E", color: .orange, style: style, size: .large)).zIndex(7)
-          Image(IDEIcon("I", color: .blue, style: style, size: .large)).zIndex(6)
-          Image(IDEIcon("C", color: .red, style: style, size: .large)).zIndex(5)
-          Image(IDEIcon("O", color: .teal, style: style, size: .large)).zIndex(4)
-          Image(IDEIcon("N", color: .brown, style: style, size: .large)).zIndex(3)
-          Image(IDEIcon("S", color: .yellow, style: style, size: .large)).zIndex(2)
+          Image(IDEIcon("I", color: .purple, style: style, size: 32)).zIndex(9)
+          Image(IDEIcon("D", color: .green, style: style, size: 32)).zIndex(8)
+          Image(IDEIcon("E", color: .orange, style: style, size: 32)).zIndex(7)
+          Image(IDEIcon("I", color: .blue, style: style, size: 32)).zIndex(6)
+          Image(IDEIcon("C", color: .red, style: style, size: 32)).zIndex(5)
+          Image(IDEIcon("O", color: .teal, style: style, size: 32)).zIndex(4)
+          Image(IDEIcon("N", color: .brown, style: style, size: 32)).zIndex(3)
+          Image(IDEIcon("S", color: .yellow, style: style, size: 32)).zIndex(2)
 
-          //Image(IDEIcon("S", color: .blue, size: .large)).zIndex(6)
-          //Image(IDEIcon("Y", color: .red, size: .large)).zIndex(5)
-          //Image(IDEIcon("M", color: .teal, size: .large)).zIndex(4)
-          //Image(IDEIcon("B", color: .brown, size: .large)).zIndex(3)
-          //Image(IDEIcon("O", color: .yellow, size: .large)).zIndex(2)
-          //Image(IDEIcon("L", color: .gray, size: .large)).zIndex(1)
-          //Image(IDEIcon("S", color: .pink, size: .large)).zIndex(0)
+          //Image(IDEIcon("S", color: .blue, size: 32)).zIndex(6)
+          //Image(IDEIcon("Y", color: .red, size: 32)).zIndex(5)
+          //Image(IDEIcon("M", color: .teal, size: 32)).zIndex(4)
+          //Image(IDEIcon("B", color: .brown, size: 32)).zIndex(3)
+          //Image(IDEIcon("O", color: .yellow, size: 32)).zIndex(2)
+          //Image(IDEIcon("L", color: .gray, size: 32)).zIndex(1)
+          //Image(IDEIcon("S", color: .pink, size: 32)).zIndex(0)
         }
         HStack(spacing: 2) { DataModelExamples(style: style) }
           //.environment(\.layoutDirection, .rightToLeft)
@@ -115,21 +115,21 @@ struct IDEIcon_Previews: PreviewProvider {
     Group {
       HStack(alignment: .top, spacing: 50) {
         VStack(alignment: .leading) { DebuggerExamples() }
-        VStack(alignment: .leading) { DebuggerExamples(size: .large) }
+        VStack(alignment: .leading) { DebuggerExamples(size: 32) }
       }
       .padding()
       .previewDisplayName("Debugger Examples")
 
       HStack(alignment: .top, spacing: 50) {
         VStack(alignment: .leading) { DatabaseObjectExamples() }
-        VStack(alignment: .leading) { DatabaseObjectExamples(size: .large) }
+        VStack(alignment: .leading) { DatabaseObjectExamples(size: 32) }
       }
       .padding()
       .previewDisplayName("Database Object Examples")
 
       HStack(alignment: .top, spacing: 50) {
         VStack(alignment: .leading) { DatabaseExamples() }
-        VStack(alignment: .leading) { DatabaseExamples(size: .large) }
+        VStack(alignment: .leading) { DatabaseExamples(size: 32) }
       }
       .padding()
       .previewDisplayName("Database Examples")
@@ -152,9 +152,9 @@ struct IDEIcon_Previews: PreviewProvider {
 //    .preferredColorScheme(.dark)
 //
 //    HStack(alignment: .top, spacing: 50) {
-//      VStack(alignment: .leading) { SourceCodeExamples(size: .large) }
-//      VStack(alignment: .leading) { DataModelExamples(size: .large) }
-//      VStack(alignment: .leading) { DataTreeExamples(size: .large) }
+//      VStack(alignment: .leading) { SourceCodeExamples(size: 32) }
+//      VStack(alignment: .leading) { DataModelExamples(size: 32) }
+//      VStack(alignment: .leading) { DataTreeExamples(size: 32) }
 //    }
 //    .padding()
 //    .preferredColorScheme(.dark)
@@ -168,9 +168,9 @@ struct IDEIcon_Previews: PreviewProvider {
 //    .preferredColorScheme(.light)
 //
 //    HStack(alignment: .top, spacing: 50) {
-//      VStack(alignment: .leading) { SourceCodeExamples(size: .large) }
-//      VStack(alignment: .leading) { DataModelExamples(size: .large) }
-//      VStack(alignment: .leading) { DataTreeExamples(size: .large) }
+//      VStack(alignment: .leading) { SourceCodeExamples(size: 32) }
+//      VStack(alignment: .leading) { DataModelExamples(size: 32) }
+//      VStack(alignment: .leading) { DataTreeExamples(size: 32) }
 //    }
 //    .padding()
 //    .preferredColorScheme(.light)
