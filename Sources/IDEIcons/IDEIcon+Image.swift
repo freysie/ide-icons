@@ -90,7 +90,7 @@ public extension IDEIcon {
 
   var fontSize: CGFloat { (size / 1.5).rounded() }
   // var outerRadius: CGFloat { size < 24 ? 3 : 7 }
-  var outerRadius: CGFloat { (size / 4.5).rounded() }
+  var outerRadius: CGFloat { (size / 4.5).rounded(.down) }
   var outlineWidth: CGFloat { 1 }
   var borderWidth: CGFloat { 1 }
   var yOffset: CGFloat { size < IDEIconSize.large ? 0 : -3 } // FIXME: just center it, omg

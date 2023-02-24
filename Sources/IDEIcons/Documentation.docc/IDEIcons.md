@@ -29,8 +29,9 @@ IDEIcon(systemImage: "power")
 Icons can have different sizes.
 
 ```swift
-IDEIcon("R", size: .regular)
-IDEIcon("L", size: .large)
+IDEIcon("R", size: IDEIconSize.regular)
+IDEIcon("L", size: IDEIconSize.large)
+IDEIcon("H", size: 96)
 ```
 
 Icons come in different styles.
