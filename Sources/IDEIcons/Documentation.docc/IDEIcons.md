@@ -23,6 +23,7 @@ Icons can contain text, images, or system images.
 ```swift
 IDEIcon("T")
 IDEIcon(image: "binary")
+IDEIcon(image: "binary", bundle: .module)
 IDEIcon(systemImage: "power")
 ```
 
@@ -39,7 +40,7 @@ Icons come in different styles.
 ```swift
 IDEIcon("D", style: .default)
 IDEIcon("O", style: .outline)
-IDEIcon("O", style: .simple)
+IDEIcon("S", style: .simple)
 ```
 
 ## Topics

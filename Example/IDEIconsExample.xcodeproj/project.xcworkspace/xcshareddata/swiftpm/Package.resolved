@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "screenshotting",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/freyaalminde/screenshotting.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "6c68cd3c6fe0b41846a6945a9b25ccd39cebe018"
+      }
+    }
+  ],
+  "version" : 2
+}

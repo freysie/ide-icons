@@ -1,4 +1,4 @@
-# IDE Icons (🚧 Work in Progress 🚧)
+# IDE Icons
 
 Icons for use in integrated development environment apps.
 
@@ -31,7 +31,7 @@ IDEIcon(systemImage:color:colorScheme:style:size:)
 ```swift
 IDEIcon("P", color: .purple).image
 IDEIcon("P", style: .outline).templateImage
-Label("Property", IDEIcon("P"))
+Label("Property", IDEIcon("P", style: .simple))
 ```
 
 <!--
@@ -42,10 +42,4 @@ UIImage(IDEIcon("P"))
 CGImage(IDEIcon("P"))
 ```
 -->
-
-
-## Roadmap
-
-* Rethink API — perhaps just a single `IDEIcon()` function which returns a platform image object?
-* Make rendering work for iOS and watchOS again
 

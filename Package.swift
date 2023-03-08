@@ -12,12 +12,7 @@ let package = Package(
   products: [
     .library(name: "IDEIcons", targets: ["IDEIcons"]),
   ],
-  dependencies: [
-    .package(url: "https://github.com/freyaalminde/previews-capture.git", branch: "refactor"),
-  ],
   targets: [
-    .target(name: "IDEIcons", dependencies: [
-      .product(name: "PreviewsCapture", package: "previews-capture"),
-    ]),
+    .target(name: "IDEIcons"),
   ]
 )

@@ -1,6 +1,6 @@
 import SwiftUI
 
-// TODO: use asset catalog instead
+// TODO: use asset catalog instead?
 
 public struct AdaptiveColor {
   public let lightColor: Color
@@ -174,7 +174,7 @@ extension IDEIconColor {
 
   public var simpleColor: Color {
     switch self {
-    case .monochrome: return .primary
+    case .monochrome: return Color(white: 0.85)
     case .blue: return .blue
     case .brown: return .brown
     case .gray: return .gray
@@ -184,7 +184,7 @@ extension IDEIconColor {
     case .purple: return .purple
     case .red: return .red
     case .teal: return .teal
-    case .yellow: return .orange
+    case .yellow: return .orange // hmm…
     }
   }
 }
