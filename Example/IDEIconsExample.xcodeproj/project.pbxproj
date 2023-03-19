@@ -11,12 +11,12 @@
 		3BC3184829B8ED6C0073F040 /* IDEIcons in Frameworks */ = {isa = PBXBuildFile; productRef = 3BC3184729B8ED6C0073F040 /* IDEIcons */; };
 		3BC3184A29B8ED6C0073F040 /* Screenshotting in Frameworks */ = {isa = PBXBuildFile; productRef = 3BC3184929B8ED6C0073F040 /* Screenshotting */; };
 		3BC3184C29B8ED6C0073F040 /* ScreenshottingRNG in Frameworks */ = {isa = PBXBuildFile; productRef = 3BC3184B29B8ED6C0073F040 /* ScreenshottingRNG */; };
-		3BC3185129B8EF480073F040 /* IDEIconsExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3184F29B8EF470073F040 /* IDEIconsExampleApp.swift */; };
-		3BC3185229B8EF480073F040 /* IDEIconsExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3184F29B8EF470073F040 /* IDEIconsExampleApp.swift */; };
-		3BC3185329B8EF480073F040 /* IDEIconsScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3185029B8EF470073F040 /* IDEIconsScreenshots.swift */; };
-		3BC3185429B8EF480073F040 /* IDEIconsScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3185029B8EF470073F040 /* IDEIconsScreenshots.swift */; };
 		3BC3185729B8EF820073F040 /* Screenshotting in Frameworks */ = {isa = PBXBuildFile; productRef = 3BC3185629B8EF820073F040 /* Screenshotting */; };
 		3BC3185929B8EF860073F040 /* ScreenshottingRNG in Frameworks */ = {isa = PBXBuildFile; productRef = 3BC3185829B8EF860073F040 /* ScreenshottingRNG */; };
+		3BC7B9A429BE374300EC3092 /* IDEIconsExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3184F29B8EF470073F040 /* IDEIconsExampleApp.swift */; };
+		3BC7B9A829BE376900EC3092 /* IDEIconsScreenshotsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC7B9A529BE376900EC3092 /* IDEIconsScreenshotsApp.swift */; };
+		3BC7B9A929BE376900EC3092 /* IDEIcons+Screenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC7B9A629BE376900EC3092 /* IDEIcons+Screenshots.swift */; };
+		3BC7B9AA29BE376900EC3092 /* IDEIcons+Screenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC7B9A629BE376900EC3092 /* IDEIcons+Screenshots.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,7 +24,8 @@
 		3BC3184229B8ED070073F040 /* IDEIconsScreenshots.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IDEIconsScreenshots.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BC3184E29B8EF3C0073F040 /* ide-icons */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "ide-icons"; path = ..; sourceTree = "<group>"; };
 		3BC3184F29B8EF470073F040 /* IDEIconsExampleApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDEIconsExampleApp.swift; sourceTree = "<group>"; };
-		3BC3185029B8EF470073F040 /* IDEIconsScreenshots.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDEIconsScreenshots.swift; sourceTree = "<group>"; };
+		3BC7B9A529BE376900EC3092 /* IDEIconsScreenshotsApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDEIconsScreenshotsApp.swift; sourceTree = "<group>"; };
+		3BC7B9A629BE376900EC3092 /* IDEIcons+Screenshots.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IDEIcons+Screenshots.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,8 +55,9 @@
 		3BC3181729B8EC140073F040 = {
 			isa = PBXGroup;
 			children = (
+				3BC7B9A629BE376900EC3092 /* IDEIcons+Screenshots.swift */,
 				3BC3184F29B8EF470073F040 /* IDEIconsExampleApp.swift */,
-				3BC3185029B8EF470073F040 /* IDEIconsScreenshots.swift */,
+				3BC7B9A529BE376900EC3092 /* IDEIconsScreenshotsApp.swift */,
 				3BC3184E29B8EF3C0073F040 /* ide-icons */,
 				3BC3182129B8EC150073F040 /* Products */,
 				3BC3185529B8EF820073F040 /* Frameworks */,
@@ -92,6 +94,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				3B5BCE2F29BE226900BFE203 /* PBXTargetDependency */,
 			);
 			name = IDEIconsExample;
 			packageProductDependencies = (
@@ -114,6 +117,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				3B5BCE3129BE226E00BFE203 /* PBXTargetDependency */,
 			);
 			name = IDEIconsScreenshots;
 			packageProductDependencies = (
@@ -188,8 +192,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3BC3185129B8EF480073F040 /* IDEIconsExampleApp.swift in Sources */,
-				3BC3185329B8EF480073F040 /* IDEIconsScreenshots.swift in Sources */,
+				3BC7B9A929BE376900EC3092 /* IDEIcons+Screenshots.swift in Sources */,
+				3BC7B9A429BE374300EC3092 /* IDEIconsExampleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,12 +201,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3BC3185229B8EF480073F040 /* IDEIconsExampleApp.swift in Sources */,
-				3BC3185429B8EF480073F040 /* IDEIconsScreenshots.swift in Sources */,
+				3BC7B9AA29BE376900EC3092 /* IDEIcons+Screenshots.swift in Sources */,
+				3BC7B9A829BE376900EC3092 /* IDEIconsScreenshotsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3B5BCE2F29BE226900BFE203 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 3B5BCE2E29BE226900BFE203 /* IDEIcons */;
+		};
+		3B5BCE3129BE226E00BFE203 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 3B5BCE3029BE226E00BFE203 /* IDEIcons */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3BC3182D29B8EC190073F040 /* Debug */ = {
@@ -500,6 +515,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3B5BCE2E29BE226900BFE203 /* IDEIcons */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = IDEIcons;
+		};
+		3B5BCE3029BE226E00BFE203 /* IDEIcons */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = IDEIcons;
+		};
 		3BC3184529B8ED650073F040 /* IDEIcons */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = IDEIcons;

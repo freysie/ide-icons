@@ -3,34 +3,24 @@ import IDEIcons
 import Screenshotting
 import ScreenshottingRNG
 
-//@main
-//struct IDEIconsScreenshots: App {
-//  var body: some Scene {
-//    ScreenshottingScene()
-//  }
-//}
-
 @available(macOS 13.0, iOS 16.0, watchOS 9.0, *)
 class IDEIcons_Screenshots: PreviewProvider {
   static var previews: some View {
+    IconGrid(horizontalSpacing: 3, verticalSpacing: 2, horizontalPadding: 4, verticalPadding: 5)//, iconSize: IDEIconSize.large)
+      .padding()
+      .frame(width: 304, height: 200)
+      .background()
+      .previewLayout(.sizeThatFits)
+      .previewDisplayName("README Banner")
+      .screenshot("IDEIcons")
+
     IconGrid(wordmarkStyle: .simpleHighlighted)
       .padding()
       .frame(width: 640, height: 320)
       .background()
       .previewLayout(.sizeThatFits)
       .previewDisplayName("GitHub Social Preview")
-    //.task { await ScreenshotController().saveAll() }
       .screenshot("GitHubSocialPreview", colorScheme: .dark, scale: 2)
-
-    IconGrid(horizontalSpacing: 3, verticalSpacing: 2, horizontalPadding: 4, verticalPadding: 5)
-      .padding()
-      .frame(width: 304, height: 200)
-      //.background()
-      .previewLayout(.sizeThatFits)
-      .previewDisplayName("README Banner")
-      .screenshot("IDEIcons")
-      //.task { await ScreenshotController().saveAll() }
-    // .screenshot("IDEIcons")
 
     AllPermutations()
       .padding()
@@ -83,13 +73,17 @@ class IDEIcons_Screenshots: PreviewProvider {
     var horizontalSpacing = 4.0
     var verticalSpacing = 3.0
 
-    var horizontalPadding = 13
+    var horizontalPadding = 12
     var verticalPadding = 8
 
     var numberOfColumns: Int { wordmark.count * (largeWordmark ? 2 : 1) + horizontalPadding * 2 }
     var numberOfRows: Int { wordmark.count * (largeWordmark ? 2 : 1) + verticalPadding * 2 }
 
-    @State var randomSource = Rand48RandomNumberGenerator(seed: 0x1)
+    var iconSize = IDEIconSize.regular
+
+    //@State var rng = Rand48RandomNumberGenerator(seed: 0x1)
+    @State var rng = GKMersenneTwisterRandomSource(seed: 0x1)
+    //@State var rng = Xoroshiro256StarStarRandomNumberGenerator(seed: (1, 0, 2, 4))
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
@@ -120,7 +114,7 @@ class IDEIcons_Screenshots: PreviewProvider {
             GridRow { ForEach(0..<horizontalPadding, id: \.self) { _ in example } }
 
             ForEach(Array(wordmark.uppercased().enumerated()), id: \.offset) { (_, c) in
-              IconView(IDEIcon("\(c)", color: .monochrome, style: wordmarkStyle))
+              IconView(IDEIcon("\(c)", color: .monochrome, style: wordmarkStyle, size: iconSize))
             }
 
             GridRow { ForEach(0..<horizontalPadding, id: \.self) { _ in example } }
@@ -133,15 +127,17 @@ class IDEIcons_Screenshots: PreviewProvider {
       }
     }
 
-    @ViewBuilder var example: some View {
+    var example: some View {
       //IconView(nextExample())
-      IconView(Self.examples.randomElement(using: &randomSource)!)
-      //Image(Self.examples.randomElement(using: &randomSource)!)
+      var icon = Self.examples.randomElement(using: &rng)!
+      icon.size = iconSize
+      return IconView(icon)
+      //Image(Self.examples.randomElement(using: &rng)!)
     }
 
     //@State var i = 0
     //func nextExample() -> IDEIcon {
-    //  //Self.examples.randomElement(using: &randomSource)!
+    //  //Self.examples.randomElement(using: &rng)!
     //  //i += 1
     //  //if i >= Self.examples.count - 1 { i = -1 }
     //  //i += 1
