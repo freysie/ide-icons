@@ -9,7 +9,7 @@ class IDEIcons_Screenshots: PreviewProvider {
     IconGrid(horizontalSpacing: 3, verticalSpacing: 2, horizontalPadding: 4, verticalPadding: 5)//, iconSize: IDEIconSize.large)
       .padding()
       .frame(width: 304, height: 200)
-      .background()
+      //.background()
       .previewLayout(.sizeThatFits)
       .previewDisplayName("README Banner")
       .screenshot("IDEIcons")
@@ -68,6 +68,7 @@ class IDEIcons_Screenshots: PreviewProvider {
   struct IconGrid: View {
     var wordmark = "IDEIcons"
     var wordmarkStyle = IDEIconStyle.default
+    var wordmarkColor = IDEIconColor.purple
     var largeWordmark = false
 
     var horizontalSpacing = 4.0
@@ -82,7 +83,7 @@ class IDEIcons_Screenshots: PreviewProvider {
     var iconSize = IDEIconSize.regular
 
     //@State var rng = Rand48RandomNumberGenerator(seed: 0x1)
-    @State var rng = GKMersenneTwisterRandomSource(seed: 0x1)
+    @State var rng = GKMersenneTwisterRandomSource(seed: 0x100)
     //@State var rng = Xoroshiro256StarStarRandomNumberGenerator(seed: (1, 0, 2, 4))
     @Environment(\.colorScheme) var colorScheme
 
@@ -101,7 +102,7 @@ class IDEIcons_Screenshots: PreviewProvider {
             .gridCellColumns(horizontalPadding)
 
             ForEach(Array(wordmark.uppercased().enumerated()), id: \.offset) { (_, c) in
-              IconView(IDEIcon("\(c)", color: .monochrome, style: wordmarkStyle, size: 32))
+              IconView(IDEIcon("\(c)", color: wordmarkColor, style: wordmarkStyle, size: 32))
                   .gridCellColumns(2)
             }
 
@@ -114,7 +115,7 @@ class IDEIcons_Screenshots: PreviewProvider {
             GridRow { ForEach(0..<horizontalPadding, id: \.self) { _ in example } }
 
             ForEach(Array(wordmark.uppercased().enumerated()), id: \.offset) { (_, c) in
-              IconView(IDEIcon("\(c)", color: .monochrome, style: wordmarkStyle, size: iconSize))
+              IconView(IDEIcon("\(c)", color: wordmarkColor, style: wordmarkStyle, size: iconSize))
             }
 
             GridRow { ForEach(0..<horizontalPadding, id: \.self) { _ in example } }
@@ -158,9 +159,13 @@ class IDEIcons_Screenshots: PreviewProvider {
       IDEIcon("Pr", color: .purple),
       IDEIcon("M", color: .blue),
       IDEIcon("P", color: .teal),
+      IDEIcon("R", color: .pink),
+      IDEIcon("V", color: .green),
+      IDEIcon("K", color: .brown),
+      
       //IDEIcon("@", color: .gray),
       IDEIcon(systemImage: "at", color: .gray),
-      IDEIcon("{ }", color: .gray),
+      //IDEIcon("{ }", color: .gray), // FIXME: looks bad w/ expanded/condensed
       //IDEIcon(systemImage: "list.bullet", color: .monochrome),
 
       IDEIcon("N", color: .purple),
@@ -209,10 +214,12 @@ class IDEIcons_Screenshots: PreviewProvider {
       .flatMap {
         var o = $0
         o.style = .outline
-        var s = $0
-        s.style = .simple
+        //var s = $0
+        //s.style = .simple
         //return [s]
-        return [s, $0, o]
+        return [o]
+        //return [$0, o]
+        //return [s, $0, o]
       }
   }
 }

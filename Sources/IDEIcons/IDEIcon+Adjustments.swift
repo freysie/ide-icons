@@ -23,8 +23,8 @@ extension IDEIcon {
       switch string {
       case "@": return 1
       case "{}", "{ }": return -1
-      case "#": return 2.5
-      case "Ti": return 0.5
+      //case "#": return 2.5
+      //case "Ti": return 0.5
       case "⨍": return 0
       case "•": return 2.5
       default: break

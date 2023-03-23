@@ -180,21 +180,40 @@ public extension IDEIcon {
   }
 
   func drawInterior(context: CGContext, bounds: CGRect) {
-    // let deviceBounds = context.convertToDeviceSpace(bounds)
-    // let scale = deviceBounds.size.height / bounds.size.height
+//    let deviceBounds = context.convertToDeviceSpace(bounds)
+//    let scale = deviceBounds.size.height / bounds.size.height
 
-    var font = PlatformFont.systemFont(ofSize: (fontSize + fontSizeAdjustment), weight: fontWeight)
-#if os(macOS)
-    font.fontDescriptor
-      .withSymbolicTraits(.expanded)
-      .withDesign(.rounded)
-      .map { PlatformFont(descriptor: $0, size: font.pointSize).map { font = $0 } }
-#else
-    font.fontDescriptor
-      .withSymbolicTraits(.expanded)
-      .withDesign(.rounded)
-      .map { font = PlatformFont(descriptor: $0, size: font.pointSize) }
-#endif
+    let font: PlatformFont
+    if case .text(let string) = content, style != .simple, style != .simpleHighlighted {
+      if string.count == 1 {
+        if string == "⨍" {
+          // (╯°□°)╯︵ ┻━┻
+          font = PlatformFont(name: "SFPro-ExpandedBlack", size: fontSize + fontSizeAdjustment)!
+        } else {
+          font = PlatformFont(name: "SFPro-ExpandedMedium", size: fontSize + fontSizeAdjustment)!
+        }
+      } else {
+        font = PlatformFont(name: "SFPro-CondensedMedium", size: fontSize + fontSizeAdjustment)!
+      }
+    } else {
+      font = PlatformFont.systemFont(ofSize: fontSize + fontSizeAdjustment, weight: fontWeight)
+    }
+
+    //var font = PlatformFont.systemFont(ofSize: fontSize + fontSizeAdjustment, weight: fontWeight)
+//#if os(macOS)
+//    Optional(font.fontDescriptor
+//      .withSymbolicTraits([.expanded, .bold])
+//    )
+//      //.withDesign(.rounded)
+//      .map { PlatformFont(descriptor: $0, size: font.pointSize).map { font = $0 } }
+//#else
+//    font.fontDescriptor
+//      .withSymbolicTraits(.expanded)
+//      .withDesign(.rounded)
+//      .map { font = PlatformFont(descriptor: $0, size: font.pointSize) }
+//#endif
+
+    //print(font)
 
 //    guard let descriptor = systemFont.fontDescriptor.withDesign(design) else { return systemFont }
 //    return NSFont(descriptor: descriptor, size: systemFont.pointSize) ?? systemFont
@@ -215,6 +234,7 @@ public extension IDEIcon {
 
     let symbolFrame = bounds
       .insetBy(borderWidth + outlineWidth)
+      //.offsetBy(dx: 0.5 / scale, dy: 0)
       //// + style == .outline ? 0.5 : 0 ?
       //.offsetBy(dx: 0, dy: yOffset + yOffsetAdjustment) // + style == .outline ? 0.5 : 0 ?
 
@@ -236,7 +256,13 @@ public extension IDEIcon {
 
       //let dy = (symbolFrame.height - attributedString.size().height) / 2
       //let textFrame = symbolFrame.integral.offsetBy(dx: 0, dy: yOffsetAdjustment - dy)
-      let textFrame = attributedString.size().centered(in: symbolFrame).offsetBy(dx: 0, dy: yOffsetAdjustment)
+      var textFrame = attributedString.size().centered(in: symbolFrame).integral.offsetBy(dx: 0, dy: yOffsetAdjustment)
+
+      //if string.count == 1 {
+      if string != "•", style != .simple, style != .simpleHighlighted {
+        textFrame = textFrame.offsetBy(dx: 0, dy: -1)
+      }
+      //}
 
       // NSDottedFrameRect(textFrame)
       //UIRectFrame(textFrame)
