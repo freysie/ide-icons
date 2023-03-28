@@ -22,7 +22,7 @@ extension IDEIcon {
     case .text(let string):
       switch string {
       case "@": return 1
-      case "{}", "{ }": return -1
+      case "{}": return -1
       //case "#": return 2.5
       //case "Ti": return 0.5
       case "⨍": return 0
@@ -51,7 +51,7 @@ extension IDEIcon {
         switch string {
         case "@": return 1
         case "#": return 0
-        case "{}", "{ }": return 1
+        case "{}": return 0
         case "⨍": return 1
           // case "􀩲": xOffset = 0.5
         case "•": return 1
@@ -60,10 +60,11 @@ extension IDEIcon {
         }
       } else {
         switch string {
-        case "@": return 4
-        case "#": return 3
-        case "{}", "{ }": return 2.5
-        case "⨍": return 4.5
+        case "@": return 3
+        case "#": return 0
+        case "•": return 3
+        case "{}": return 2
+        case "⨍": return 3.5
           //      case "Ti": return -2
         default: break
         }

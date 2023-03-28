@@ -1,5 +1,5 @@
 import SwiftUI
-import IDEIcons
+@testable import IDEIcons
 import Screenshotting
 import ScreenshottingRNG
 
@@ -33,6 +33,10 @@ class IDEIcons_Screenshots: PreviewProvider {
     Alphabet(size: 32)
       .padding()
       .previewDisplayName("Alphabet (32 pt)")
+
+    Pangram()
+      .padding()
+      .previewDisplayName("Pangram")
   }
 
   struct AllPermutations: View {
@@ -61,7 +65,31 @@ class IDEIcons_Screenshots: PreviewProvider {
     var size = IDEIconSize.regular
 
     var body: some View {
-      HStack(spacing: 2) { ForEach(Self.alphabet, id: \.self) { Image(IDEIcon(String($0), size: size)) } }
+      VStack(spacing: 2) {
+        ForEach(IDEIconColor.allCases, id: \.self) { color in
+          HStack(spacing: 2) {
+            ForEach(Self.alphabet, id: \.self) {
+              Image(IDEIcon(String($0), color: color, size: size))
+            }
+          }
+        }
+      }
+    }
+  }
+
+  struct Pangram: View {
+    var size = IDEIconSize.regular
+
+    var body: some View {
+      VStack(spacing: 2) {
+        ForEach(IDEIconColor.allCases, id: \.self) { color in
+          HStack(spacing: 2) {
+            ForEach(exampleIcons.map({ IDEIcon($0.content) }).uniqued(), id: \.self) {
+              Image(IDEIcon($0.content, color: color, size: size))
+            }
+          }
+        }
+      }
     }
   }
 
@@ -146,82 +174,16 @@ class IDEIcons_Screenshots: PreviewProvider {
     //  //return Self.examples.next()
     //}
 
-    static var examples = [
-      IDEIcon("T", color: .orange),
-      IDEIcon("E", color: .orange),
-      IDEIcon("Ex", color: .orange),
-      IDEIcon("K", color: .green),
-      IDEIcon("L", color: .green),
-      IDEIcon("⨍", color: .green),
-      IDEIcon("#", color: .red),
-      IDEIcon("C", color: .purple),
-      IDEIcon("S", color: .purple),
-      IDEIcon("Pr", color: .purple),
-      IDEIcon("M", color: .blue),
-      IDEIcon("P", color: .teal),
-      IDEIcon("R", color: .pink),
-      IDEIcon("V", color: .green),
-      IDEIcon("K", color: .brown),
-      
-      //IDEIcon("@", color: .gray),
-      IDEIcon(systemImage: "at", color: .gray),
-      //IDEIcon("{ }", color: .gray), // FIXME: looks bad w/ expanded/condensed
-      //IDEIcon(systemImage: "list.bullet", color: .monochrome),
-
-      IDEIcon("N", color: .purple),
-      IDEIcon("S", color: .purple),
-      IDEIcon("B", color: .purple),
-      IDEIcon("D", color: .purple),
-      IDEIcon(systemImage: "power", color: .purple),
-      IDEIcon("#", color: .purple),
-      IDEIcon(systemImage: "barcode", color: .purple),
-      IDEIcon("U", color: .purple),
-      IDEIcon("T", color: .purple),
-      IDEIcon("Ti", color: .purple),
-      IDEIcon("?", color: .purple),
-      IDEIcon("O", color: .red),
-      IDEIcon("M", color: .red),
-      IDEIcon("E", color: .blue),
-      IDEIcon("F", color: .blue),
-      IDEIcon("C", color: .gray),
-      IDEIcon("R", color: .brown),
-      IDEIcon("I", color: .brown),
-
-      IDEIcon("O", color: .yellow),
-      IDEIcon("A", color: .yellow),
-      IDEIcon("S", color: .red),
-      IDEIcon("N", color: .blue),
-      IDEIcon("B", color: .purple),
-      IDEIcon("N", color: .gray),
-
-      IDEIcon("•", color: .purple),
-      IDEIcon(systemImage: "rectangle.connected.to.line.below", color: .purple),
-      IDEIcon(systemImage: "magnifyingglass", color: .purple),
-
-      IDEIcon(systemImage: "gearshape.fill", color: .brown),
-      IDEIcon(systemImage: "building.columns.fill", color: .brown),
-      IDEIcon(systemImage: "puzzlepiece.fill", color: .yellow),
-      IDEIcon(systemImage: "paintbrush.pointed.fill", color: .purple),
-      IDEIcon(systemImage: "square.stack.3d.up.fill", color: .pink),
-      IDEIcon(systemImage: "chevron.left.forwardslash.chevron.right", color: .pink),
-      IDEIcon(systemImage: "latch.2.case.fill", color: .orange),
-      IDEIcon(systemImage: "person.fill", color: .blue),
-
-      //IDEIcon(systemImage: "tablecells", color: .teal),
-      //IDEIcon(systemImage: "rectangle.and.text.magnifyingglass", color: .teal),
-      //IDEIcon(systemImage: "scroll", color: .orange),
-      //IDEIcon(systemImage: "bolt.fill", color: .orange),
-    ]
-      .flatMap {
-        var o = $0
-        o.style = .outline
-        //var s = $0
-        //s.style = .simple
-        //return [s]
-        return [o]
-        //return [$0, o]
-        //return [s, $0, o]
-      }
+    static var examples = exampleIcons.flatMap {
+      var o = $0
+      o.style = .outline
+      //var s = $0
+      //s.style = .simple
+      //return [s]
+      return [o]
+      //return [$0, o]
+      //return [s, $0, o]
+    }
   }
 }
 
@@ -232,6 +194,84 @@ extension String {
     return (0..<26).map { i in Character(Unicode.Scalar(aCode + i) ?? aScalars[aScalars.startIndex]) }
   }
 }
+
+fileprivate let exampleIcons = [
+  IDEIcon("T", color: .orange),
+  IDEIcon("E", color: .orange),
+  IDEIcon("Ex", color: .orange),
+  IDEIcon("K", color: .green),
+  IDEIcon("L", color: .green),
+  IDEIcon("⨍", color: .green),
+  IDEIcon("#", color: .red),
+  IDEIcon("C", color: .purple),
+  IDEIcon("S", color: .purple),
+  IDEIcon("Pr", color: .purple),
+  IDEIcon("M", color: .blue),
+  IDEIcon("P", color: .teal),
+  IDEIcon("R", color: .pink),
+  IDEIcon("V", color: .green),
+  IDEIcon("K", color: .brown),
+
+  //IDEIcon("@", color: .gray),
+  IDEIcon(systemImage: "at", color: .gray),
+  IDEIcon("{}", color: .gray), // FIXME: looks bad w/ expanded/condensed
+  //IDEIcon(systemImage: "list.bullet", color: .monochrome),
+
+  IDEIcon("N", color: .purple),
+  IDEIcon("S", color: .purple),
+  IDEIcon("B", color: .purple),
+  IDEIcon("D", color: .purple),
+  IDEIcon(systemImage: "power", color: .purple),
+  IDEIcon("#", color: .purple),
+  IDEIcon(systemImage: "barcode", color: .purple),
+  IDEIcon("U", color: .purple),
+  IDEIcon("T", color: .purple),
+  IDEIcon("Ti", color: .purple),
+  IDEIcon("?", color: .purple),
+  IDEIcon("O", color: .red),
+  IDEIcon("M", color: .red),
+  IDEIcon("E", color: .blue),
+  IDEIcon("F", color: .blue),
+  IDEIcon("C", color: .gray),
+  IDEIcon("R", color: .brown),
+  IDEIcon("I", color: .brown),
+
+  IDEIcon("O", color: .yellow),
+  IDEIcon("A", color: .yellow),
+  IDEIcon("S", color: .red),
+  IDEIcon("N", color: .blue),
+  IDEIcon("B", color: .purple),
+  IDEIcon("N", color: .gray),
+
+  IDEIcon("•", color: .purple),
+  IDEIcon(systemImage: "rectangle.connected.to.line.below", color: .purple),
+  IDEIcon(systemImage: "magnifyingglass", color: .purple),
+
+  IDEIcon(systemImage: "gearshape.fill", color: .brown),
+  IDEIcon(systemImage: "building.columns.fill", color: .brown),
+  IDEIcon(systemImage: "puzzlepiece.fill", color: .yellow),
+  IDEIcon(systemImage: "paintbrush.pointed.fill", color: .purple),
+  IDEIcon(systemImage: "square.stack.3d.up.fill", color: .pink),
+  IDEIcon(systemImage: "chevron.left.forwardslash.chevron.right", color: .pink),
+  IDEIcon(systemImage: "latch.2.case.fill", color: .orange),
+  IDEIcon(systemImage: "person.fill", color: .blue),
+
+  IDEIcon("E", color: .purple),
+  IDEIcon("{}", color: .purple),
+  IDEIcon("{}", color: .red),
+  IDEIcon("{}", color: .monochrome),
+  IDEIcon(systemImage: "arrow.down", color: .blue),
+  IDEIcon("T", color: .red),
+  IDEIcon("D", color: .blue),
+  IDEIcon("Ex", color: .blue),
+  IDEIcon("A", color: .blue),
+  IDEIcon("D", color: .monochrome),
+
+  //IDEIcon(systemImage: "tablecells", color: .teal),
+  //IDEIcon(systemImage: "rectangle.and.text.magnifyingglass", color: .teal),
+  //IDEIcon(systemImage: "scroll", color: .orange),
+  //IDEIcon(systemImage: "bolt.fill", color: .orange),
+]
 
 //struct ColorEnum: View {
 //  var body: some View {
@@ -257,3 +297,10 @@ extension String {
 //    .fixedSize()
 //  }
 //}
+
+extension Sequence where Element: Hashable {
+  func uniqued() -> [Element] {
+    var set = Set<Element>()
+    return filter { set.insert($0).inserted }
+  }
+}

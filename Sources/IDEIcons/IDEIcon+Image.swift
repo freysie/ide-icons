@@ -183,9 +183,16 @@ public extension IDEIcon {
 //    let deviceBounds = context.convertToDeviceSpace(bounds)
 //    let scale = deviceBounds.size.height / bounds.size.height
 
+    // TODO: make shadow configurable
+    if style == .default, color != .monochrome {
+      context.setShadow(offset: .zero, blur: 2, color: .init(gray: 0, alpha: colorScheme == .dark ? 1 : 0.5))
+    }
+
     // TODO: selectively apply expanded and condensed based on content (e.g. ‘C’ and ‘S’ should be expanded)
     // TODO: realize that the icons in Xcode seem completely arbitrary in which are expanded and which aren’t
+    // TODO: clean this up and get it all in ship shape for 1.0 release
 
+    let condensed: Bool
     let font: PlatformFont
     // if case .text(let string) = content, style != .simple, style != .simpleHighlighted {
     //   if string.count == 1 {
@@ -199,7 +206,13 @@ public extension IDEIcon {
     //     font = PlatformFont(name: "SFPro-CondensedMedium", size: fontSize + fontSizeAdjustment)!
     //   }
     // } else {
+    if ![.simple, .simpleHighlighted].contains(style), case .text(let s) = content, ["Ex", "Pr"].contains(s) {
+      font = PlatformFont(name: "SFPro-CondensedMedium", size: fontSize + fontSizeAdjustment)!
+      condensed = true
+    } else {
       font = PlatformFont.systemFont(ofSize: fontSize + fontSizeAdjustment, weight: fontWeight)
+      condensed = false
+    }
     // }
 
     //var font = PlatformFont.systemFont(ofSize: fontSize + fontSizeAdjustment, weight: fontWeight)
@@ -232,7 +245,9 @@ public extension IDEIcon {
     }
 
 #if !os(macOS)
-    let yOffsetAdjustment = yOffsetAdjustment * -1
+    var yOffsetAdjustment = yOffsetAdjustment * -1
+#else
+    var yOffsetAdjustment = yOffsetAdjustment
 #endif
 
     let symbolFrame = bounds
@@ -245,6 +260,8 @@ public extension IDEIcon {
 
     switch content {
     case .text(let string):
+      if size >= IDEIconSize.large { yOffsetAdjustment -= 1 }
+
       let paragraphStyle = NSMutableParagraphStyle()
       paragraphStyle.alignment = .center
 //      paragraphStyle.minimumLineHeight = size - borderWidth * 2 - outlineWidth * 2
@@ -259,11 +276,13 @@ public extension IDEIcon {
 
       //let dy = (symbolFrame.height - attributedString.size().height) / 2
       //let textFrame = symbolFrame.integral.offsetBy(dx: 0, dy: yOffsetAdjustment - dy)
-      let textFrame = attributedString.size().centered(in: symbolFrame).integral.offsetBy(dx: 0, dy: yOffsetAdjustment)
+      var textFrame = attributedString.size().centered(in: symbolFrame).integral.offsetBy(dx: 0, dy: yOffsetAdjustment)
 
       //if string.count == 1 {
       //if string != "•", style != .simple, style != .simpleHighlighted {
-      //  textFrame = textFrame.offsetBy(dx: 0, dy: -1)
+      if condensed, size < IDEIconSize.large {
+        textFrame = textFrame.offsetBy(dx: 0, dy: -1)
+      }
       //}
       //}
 

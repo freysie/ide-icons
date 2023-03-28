@@ -59,9 +59,27 @@ public enum IDEIconContent: Hashable {
   /// Image content.
   case image(String, bundle: Bundle?)
 
-  /// System symbol image content.
+  /// System image content.
   case systemImage(String)
+
+//  /// Graphic content that is part of IDE Icons.
+//  case graphic(IDEIconGraphic)
 }
+
+///// Specifies the graphic of an IDE icon.
+//public enum IDEIconGraphic: Hashable {
+//  /// Three vertical bars, the middle one filled with the current accent color.
+//  case threeBars
+//
+//  /// Three bulleted list items.
+//  case list
+//
+//  /// The letter C with a line underneath.
+//  case underlinedC
+//
+//  /// A bandage.
+//  case bandage
+//}
 
 // TODO: rename default to bordered (and then outline to outlined?)?
 // TODO: add shadow style (as seen in web inspector)
@@ -73,6 +91,7 @@ public enum IDEIconStyle: Int, CaseIterable {
   case `default`, outline, simple, simpleHighlighted
 
   // TODO: consider using this instead but then hashing won’t work automatically
+  // (maybe add `isHighlighted` and a convenience `withHighlight()` to `IDEIcon` itself?
   //  case `default`, outline, simple(isHighlighted: Bool = false)
   //
   //  public static var allCases: [IDEIconStyle] {
