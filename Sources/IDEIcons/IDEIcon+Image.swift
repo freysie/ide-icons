@@ -183,21 +183,24 @@ public extension IDEIcon {
 //    let deviceBounds = context.convertToDeviceSpace(bounds)
 //    let scale = deviceBounds.size.height / bounds.size.height
 
+    // TODO: selectively apply expanded and condensed based on content (e.g. ‘C’ and ‘S’ should be expanded)
+    // TODO: realize that the icons in Xcode seem completely arbitrary in which are expanded and which aren’t
+
     let font: PlatformFont
-    if case .text(let string) = content, style != .simple, style != .simpleHighlighted {
-      if string.count == 1 {
-        if string == "⨍" {
-          // (╯°□°)╯︵ ┻━┻
-          font = PlatformFont(name: "SFPro-ExpandedBlack", size: fontSize + fontSizeAdjustment)!
-        } else {
-          font = PlatformFont(name: "SFPro-ExpandedMedium", size: fontSize + fontSizeAdjustment)!
-        }
-      } else {
-        font = PlatformFont(name: "SFPro-CondensedMedium", size: fontSize + fontSizeAdjustment)!
-      }
-    } else {
+    // if case .text(let string) = content, style != .simple, style != .simpleHighlighted {
+    //   if string.count == 1 {
+    //     if string == "⨍" {
+    //       // (╯°□°)╯︵ ┻━┻
+    //       font = PlatformFont(name: "SFPro-ExpandedBlack", size: fontSize + fontSizeAdjustment)!
+    //     } else {
+    //       font = PlatformFont(name: "SFPro-ExpandedMedium", size: fontSize + fontSizeAdjustment)!
+    //     }
+    //   } else {
+    //     font = PlatformFont(name: "SFPro-CondensedMedium", size: fontSize + fontSizeAdjustment)!
+    //   }
+    // } else {
       font = PlatformFont.systemFont(ofSize: fontSize + fontSizeAdjustment, weight: fontWeight)
-    }
+    // }
 
     //var font = PlatformFont.systemFont(ofSize: fontSize + fontSizeAdjustment, weight: fontWeight)
 //#if os(macOS)
@@ -256,12 +259,12 @@ public extension IDEIcon {
 
       //let dy = (symbolFrame.height - attributedString.size().height) / 2
       //let textFrame = symbolFrame.integral.offsetBy(dx: 0, dy: yOffsetAdjustment - dy)
-      var textFrame = attributedString.size().centered(in: symbolFrame).integral.offsetBy(dx: 0, dy: yOffsetAdjustment)
+      let textFrame = attributedString.size().centered(in: symbolFrame).integral.offsetBy(dx: 0, dy: yOffsetAdjustment)
 
       //if string.count == 1 {
-      if string != "•", style != .simple, style != .simpleHighlighted {
-        textFrame = textFrame.offsetBy(dx: 0, dy: -1)
-      }
+      //if string != "•", style != .simple, style != .simpleHighlighted {
+      //  textFrame = textFrame.offsetBy(dx: 0, dy: -1)
+      //}
       //}
 
       // NSDottedFrameRect(textFrame)

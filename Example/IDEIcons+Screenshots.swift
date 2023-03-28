@@ -181,6 +181,7 @@ class IDEIcons_Screenshots: PreviewProvider {
       IDEIcon("?", color: .purple),
       IDEIcon("O", color: .red),
       IDEIcon("M", color: .red),
+      IDEIcon("E", color: .blue),
       IDEIcon("F", color: .blue),
       IDEIcon("C", color: .gray),
       IDEIcon("R", color: .brown),
