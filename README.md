@@ -8,17 +8,15 @@ Icons for use in integrated development environment apps.
   <img alt="" src="/Screenshots/IDEIcons~dark@2x.png?raw=true" width="303">
 </picture>
 
-
 ## Installation
 
 ```swift
-.package(url: "https://github.com/freyaalminde/ide-icons.git", branch: "main"),
+.package(url: "https://github.com/freysie/ide-icons.git", branch: "main"),
 ```
 
 ```swift
 .product(name: "IDEIcons", package: "ide-icons"),
 ```
-
 
 ## Overview
 
@@ -42,4 +40,3 @@ UIImage(IDEIcon("P"))
 CGImage(IDEIcon("P"))
 ```
 -->
-
