@@ -42,7 +42,7 @@ public struct IDEIcon: Hashable {
   }
 
   /// Creates a new blueprint for an IDE icon.
-  init(_ content: IDEIconContent, color: IDEIconColor? = nil, colorScheme: ColorScheme? = nil, style: IDEIconStyle? = nil, size: CGFloat? = nil) {
+  public init(_ content: IDEIconContent, color: IDEIconColor? = nil, colorScheme: ColorScheme? = nil, style: IDEIconStyle? = nil, size: CGFloat? = nil) {
     self.content = content
     self.color = color ?? .purple
     self.colorScheme = colorScheme ?? .dark
